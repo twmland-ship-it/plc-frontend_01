@@ -7,11 +7,31 @@ export default {
     state.loading = false;
     state.initData = data;
     state.tableData = data;
+    state.error = null;
+    state.fatalError = null;
+    state.staleWarning = false;
   },
 
-  getDataErr(state, err) {
+  getDataErrNoData(state, msg) {
     state.loading = false;
-    state.error = err;
+    state.error = msg;
+    state.fatalError = msg;
+    state.staleWarning = false;
+    state.initData = [];
+    state.tableData = [];
+  },
+
+  getDataErrHasData(state, msg) {
+    state.loading = false;
+    state.error = msg;
+    state.fatalError = null;
+    state.staleWarning = true;
+  },
+
+  setNameSortOrder(state, order) {
+    if (order === "ascend" || order === "descend") {
+      state.nameSortOrder = order;
+    }
   },
 
   getOptionsBegin(state) {

@@ -1,6 +1,6 @@
 <template>
   <DataTableStyleWrap>
-    <div class="ninjadash-datatable-filter">
+    <div v-if="showToolbar" class="ninjadash-datatable-filter">
       <div>
         <a-space>
           <sdButton
@@ -59,7 +59,7 @@
           :row-class-name="getRowClassName"
           :data-source="tableData"
           :columns="columns"
-          @change="changePageSize"
+          @change="handleTableChange"
         >
         </a-table>
 
@@ -75,7 +75,7 @@
           :data-source="tableData"
           :row-class-name="getRowClassName"
           :columns="columns"
-          @change="changePageSize"
+          @change="handleTableChange"
         >
         </a-table>
       </TableWrapper>
@@ -89,6 +89,7 @@ import { DataTableStyleWrap } from "./Style";
 import { TableWrapper } from "@/view/oco/styled";
 
 export default defineComponent({
+  emits: ["onSelectChange", "tableChange"],
   components: { DataTableStyleWrap, TableWrapper },
   // expandedRow type
   // {
@@ -174,6 +175,22 @@ export default defineComponent({
       pageSize.value = pagination.pageSize;
     };
 
+    const handleTableChange = (pagination, filters, sorter, extra) => {
+      changePageSize(pagination);
+      emit("tableChange", pagination, filters, sorter, extra);
+    };
+
+    const showToolbar = computed(
+      () =>
+        !!(
+          props.addOption ||
+          props.backOption ||
+          props.filterOption ||
+          props.importOption ||
+          props.exportOption
+        )
+    );
+
     const getInnerData = ({ record }) => {
       if (props.expandedRow.innerDataProp) {
         return record[props.expandedRow.innerDataProp];
@@ -192,9 +209,10 @@ export default defineComponent({
       pageSize,
       pageSizeOptions,
       rowSelections,
-      changePageSize,
+      handleTableChange,
       getInnerData,
       getRowClassName,
+      showToolbar,
     };
   },
 });

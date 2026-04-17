@@ -9,20 +9,72 @@ const state = () => ({
 
   loading: false,
   error: null,
+  staleWarning: false,
+  fatalError: null,
+  nameSortOrder: "ascend",
 });
 
+const compareSummaryNameAsc = (a, b) => {
+  const aName = String(a?.SummaryName ?? "");
+  const bName = String(b?.SummaryName ?? "");
+  return aName.localeCompare(bName, "zh-Hant", {
+    numeric: true,
+    sensitivity: "base",
+  });
+};
+
+const hasSummaryId = (x) => typeof x?.SummaryId === "string" && x.SummaryId.length > 0;
+
+const stableSortByName = (list, sortOrder) => {
+  const dir = sortOrder === "descend" ? -1 : 1;
+  return [...list].sort((a, b) => {
+    const c = compareSummaryNameAsc(a, b);
+    if (c !== 0) return c * dir;
+    const aId = String(a?.SummaryId ?? "");
+    const bId = String(b?.SummaryId ?? "");
+    return aId.localeCompare(bId, "en", { sensitivity: "base" }) * dir;
+  });
+};
+
+const mergeBySummaryId = (oldList, newList, sortOrder) => {
+  const oldArr = Array.isArray(oldList) ? oldList.filter(hasSummaryId) : [];
+  const newArr = Array.isArray(newList) ? newList.filter(hasSummaryId) : [];
+
+  const newById = new Map(newArr.map((x) => [x.SummaryId, x]));
+  const seen = new Set();
+  const kept = [];
+
+  oldArr.forEach((oldItem) => {
+    const next = newById.get(oldItem.SummaryId);
+    if (!next) return;
+    kept.push(next);
+    seen.add(oldItem.SummaryId);
+  });
+
+  const added = [];
+  newById.forEach((val, id) => {
+    if (!seen.has(id)) added.push(val);
+  });
+
+  return stableSortByName([...kept, ...added], sortOrder);
+};
+
 const actions = {
-  async getData({ commit }) {
+  async getData({ commit, state }, { _isPoll = false } = {}) {
     try {
       commit("getDataBegin");
-      // 優先呼叫後端查詢目前卸載地區（含階段明細）
-      const res = await api.getSummaryDetailList();
-      const list = res?.data?.Detail?.SummaryDetailList ?? [];
-      commit("getDataSuccess", list);
+      const res = await api.getStatusList();
+      const list = res?.data?.Detail?.StageDetailList ?? [];
+      const nextList = mergeBySummaryId(state.tableData, list, state.nameSortOrder);
+      commit("getDataSuccess", nextList);
     } catch (err) {
-      // 後端查詢失敗時，保留 demoData 當作回退，避免影響其他功能
-      console.warn("GetElectricPowerUnloadStageGroupDetailList 失敗，使用 demoData 回退", err);
-      commit("getDataSuccess", uninstall.data);
+      const msg =
+        err?.message ? String(err.message) : typeof err === "string" ? err : String(err);
+      if (Array.isArray(state.tableData) && state.tableData.length > 0) {
+        commit("getDataErrHasData", msg);
+      } else {
+        commit("getDataErrNoData", msg);
+      }
     }
   },
 
@@ -87,7 +139,7 @@ const actions = {
       commit("getProcessDetailBegin");
       const res = await new Promise((resolve) =>
         setTimeout(() => {
-          console.log("getProcessDetail", id);
+          // demo only
           resolve(uninstall.data.find((el) => el.id === id));
         }, 500)
       );
@@ -98,7 +150,7 @@ const actions = {
     }
   },
 
-  // ---- 以下為對齊文件的實際 API 封裝：保持與現有流程隔離 ----
+  // ---- legacy/manage APIs (currently unused by status list page) ----
   async createSummary(
     { commit, dispatch },
     { Name, Mode, ContinuedSecond, IsLoad, ContractCapacity }
@@ -112,7 +164,6 @@ const actions = {
         IsLoad,
         ContractCapacity,
       });
-      // 新增後可選擇重新取列表（目前仍為 demo）
       await dispatch("getData");
       commit("addProcessSuccess");
     } catch (err) {
@@ -161,7 +212,10 @@ const actions = {
   ) {
     try {
       commit("editProcessBegin");
-      await api.editConsumableTags({ SummaryId, ElectricPowerConsumableTagIdList });
+      await api.editConsumableTags({
+        SummaryId,
+        ElectricPowerConsumableTagIdList,
+      });
       commit("editProcessSuccess");
     } catch (err) {
       commit("editProcessErr", err);
@@ -208,7 +262,6 @@ const actions = {
     try {
       commit("editProcessBegin");
       await api.editStageTag({ StageDetailId, SummaryId, TagList });
-      // 成功後重新載入列表，以反映最新 TagList
       await dispatch("getData");
       commit("editProcessSuccess");
     } catch (err) {
@@ -217,7 +270,7 @@ const actions = {
     }
   },
 
-  // ---- 既有 demo 流程：先保留，避免其他地方受影響 ----
+  // ---- demo actions ----
   async addProcess({ commit, dispatch }, data) {
     try {
       commit("addProcessBegin");
