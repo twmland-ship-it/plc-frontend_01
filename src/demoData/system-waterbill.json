@@ -1,0 +1,127 @@
+{
+  "data": {
+    "summary": {
+      "totalValue": 10000,
+      "totalPrice": 22000,
+      "basic": 300,
+      "tax": 1115,
+      "total": 23415
+    },
+    "detail": [
+      {
+        "id": "1",
+        "name": "水表1",
+        "value": "10000 M3/hr"
+      }
+    ]
+  },
+
+  "meters": [
+    {
+      "id": "1",
+      "name": "水錶1",
+      "region": "",
+      "waterUsage": ""
+    }
+  ],
+
+  "billList": [
+    {
+      "id": "1",
+      "name": "水費單排程1-2023/09/01",
+      "link": "test.txt"
+    }
+  ],
+  "schedule": [
+    {
+      "id": "1",
+      "name": "水費單排程1",
+      "meter": {
+        "setting": "1",
+        "calType": "1",
+        "meters": ["1"],
+        "date": 1
+      },
+      "season": {
+        "id": "1",
+        "name": "春季"
+      },
+      "startTime": "2023-09-26 15:00:00",
+      "repeat": {
+        "type": "1",
+        "cron": "0 0 15 * * *",
+        "count": 2
+      },
+      "endTime": {
+        "id": "3",
+        "value": "12"
+      }
+    },
+    {
+      "id": "2",
+      "name": "水費單排程2",
+      "meter": {
+        "setting": "1",
+        "calType": "2",
+        "meters": ["1"],
+        "date": 3
+      },
+      "season": {
+        "id": "1",
+        "name": "春季"
+      },
+      "startTime": "2023-09-26 00:00:00",
+      "repeat": {
+        "type": "2",
+        "cron": "0 0 15 * * 2",
+        "count": 1
+      },
+      "endTime": {
+        "id": "2",
+        "value": "2025-09-26 00:00:00"
+      }
+    },
+    {
+      "id": "3",
+      "name": "水費單排程3",
+      "meter": {
+        "setting": "1",
+        "calType": "1",
+        "meters": ["1"],
+        "date": 2
+      },
+      "season": null,
+      "startTime": "2023-09-26 00:00:00",
+      "repeat": {
+        "type": "4",
+        "cron": "0 0 0 26 9 *",
+        "count": 3
+      },
+      "endTime": {
+        "id": "1",
+        "value": null
+      }
+    }
+  ],
+  "feeList": [
+    {
+      "Year": 2024,
+      "Month": 1
+    }
+  ],
+  "feeDetail": {
+    "BasicFee": 1000,
+    "Detail": [
+      {
+        "Fee": 7.35,
+        "FromDegree": 1,
+        "AccumulatedDifference": 0
+      },
+      {
+        "Fee": 9.45,
+        "FromDegree": 11,
+        "AccumulatedDifference": 21
+      }
+    ]
+  }
+}

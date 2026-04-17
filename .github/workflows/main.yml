@@ -1,0 +1,47 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - develop
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Build image
+        run: |
+          docker build -t frontend:latest . 
+          docker save frontend:latest -o frontend.tar
+
+      - name: Install SSH Key
+        uses: shimataro/ssh-key-action@v2
+        with:
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          known_hosts: unnecessary
+
+      - name: Adding Known Hosts
+        run: ssh-keyscan  -H ${{ secrets.HOST }} >> ~/.ssh/known_hosts
+
+      - name: Deploy with rsync
+        run: rsync -avz   ./frontend.tar ${{ secrets.USERNAME }}@${{ secrets.HOST }}:/var/www/docker/images
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy stack
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          script: |
+            cd /var/www/docker
+            docker-compose down
+            docker rmi frontend:latest
+            docker load -i images/frontend.tar
+            docker-compose up --force-recreate --build -d
+            docker image prune -f

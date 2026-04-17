@@ -1,0 +1,579 @@
+{
+  "options": {
+    "chartType": [
+      {
+        "id": "line",
+        "name": "折線圖"
+      },
+      {
+        "id": "doughnut",
+        "name": "圓餅圖"
+      },
+      {
+        "id": "bar",
+        "name": "長條圖"
+      },
+      {
+        "id": "radialBar",
+        "name": "儀表盤"
+      },
+      {
+        "id": "card",
+        "name": "卡片"
+      }
+    ],
+
+    "summaryType": [
+      {
+        "id": "1",
+
+        "name": "加總"
+      },
+      {
+        "id": "2",
+        "name": "平均"
+      },
+      {
+        "id": "3",
+        "name": "最大值"
+      },
+      {
+        "id": "4",
+        "name": "最小值"
+      }
+    ],
+    "detailPeriod": [
+      {
+        "id": "1",
+        "name": "時"
+      },
+      {
+        "id": "2",
+        "name": "日"
+      },
+      {
+        "id": "3",
+        "name": "月"
+      }
+    ],
+    "unit": [
+      {
+        "id": "1",
+        "name": "kWh"
+      },
+      {
+        "id": "2",
+        "name": "kVAh"
+      },
+      {
+        "id": "3",
+        "name": "V"
+      }
+    ]
+  },
+  "data": {
+    "ReturnCode": "00000001",
+    "Message": "Success",
+    "Detail": [
+      {
+        "id": "1",
+        "name": "即時用電趨勢",
+        "chartType": "line",
+        "summary": "1",
+        "paramSummary": 1,
+        "timePeriod": 3,
+        "detailPeriod": 3,
+        "unit": {
+          "id": "1",
+          "name": "kWh"
+        },
+        "params": [
+          {
+            "name": "耗電量",
+            "groups": ["1"],
+            "tags": [
+              "c81c0858-ed92-468c-a641-1d024f2360e9",
+              "6c2d5ea4-6ad6-4429-bf88-18e33d793cce"
+            ]
+          }
+        ],
+        "data": [
+          {
+            "Name": "2023-09-15 06:30:00",
+            "Value": 1000.2,
+            "detail": [
+              {
+                "Name": "tag1",
+                "Value": 10
+              },
+              {
+                "Name": "tag2",
+                "Value": 20
+              }
+            ]
+          },
+          {
+            "Name": "2023-09-15 06:45:00",
+            "Value": 1200.3,
+            "detail": [
+              {
+                "Name": "tag1",
+                "Value": 10
+              },
+              {
+                "Name": "tag2",
+                "Value": 20
+              }
+            ]
+          },
+          {
+            "Name": "2023-09-15 07:00:00",
+            "Value": 1679.5,
+            "detail": [
+              {
+                "Name": "tag1",
+                "Value": 10
+              },
+              {
+                "Name": "tag2",
+                "Value": 20
+              }
+            ]
+          },
+          {
+            "Name": "2023-09-15 07:15:00",
+            "Value": 1250.4,
+            "detail": [
+              {
+                "Name": "tag1",
+                "Value": 10
+              },
+              {
+                "Name": "tag2",
+                "Value": 20
+              }
+            ]
+          },
+          {
+            "Name": "2023-09-15 07:30:00",
+            "Value": 1522.3,
+            "detail": [
+              {
+                "Name": "tag1",
+                "Value": 10
+              },
+              {
+                "Name": "tag2",
+                "Value": 20
+              }
+            ]
+          },
+          {
+            "Name": "2023-09-15 07:45:00",
+            "Value": 1132.2,
+            "detail": [
+              {
+                "Name": "tag1",
+                "Value": 10
+              },
+              {
+                "Name": "tag2",
+                "Value": 20
+              }
+            ]
+          },
+          {
+            "Name": "2023-09-15 08:00:00",
+            "Value": 1244.2,
+            "detail": [
+              {
+                "Name": "tag1",
+                "Value": 10
+              },
+              {
+                "Name": "tag2",
+                "Value": 20
+              }
+            ]
+          },
+          {
+            "Name": "2023-09-15 08:15:00",
+            "Value": 1355.8,
+            "detail": [
+              {
+                "Name": "tag1",
+                "Value": 10
+              },
+              {
+                "Name": "tag2",
+                "Value": 20
+              }
+            ]
+          },
+          {
+            "Name": "2023-09-15 08:30:00",
+            "Value": 1426.6,
+            "detail": [
+              {
+                "Name": "tag1",
+                "Value": 10
+              },
+              {
+                "Name": "tag2",
+                "Value": 20
+              }
+            ]
+          },
+          {
+            "Name": "2023-09-15 08:45:00",
+            "Value": 1578.3,
+            "detail": [
+              {
+                "Name": "tag1",
+                "Value": 10
+              },
+              {
+                "Name": "tag2",
+                "Value": 20
+              }
+            ]
+          },
+          {
+            "Name": "2023-09-15 09:00:00",
+            "Value": 1004.8,
+            "detail": [
+              {
+                "Name": "tag1",
+                "Value": 10
+              },
+              {
+                "Name": "tag2",
+                "Value": 20
+              }
+            ]
+          },
+          {
+            "Name": "2023-09-15 09:15:00",
+            "Value": 1132.4,
+            "detail": [
+              {
+                "Name": "tag1",
+                "Value": 10
+              },
+              {
+                "Name": "tag2",
+                "Value": 20
+              }
+            ]
+          },
+          {
+            "Name": "2023-09-15 09:30:00",
+            "Value": 1144.7,
+            "detail": [
+              {
+                "Name": "tag1",
+                "Value": 10
+              },
+              {
+                "Name": "tag2",
+                "Value": 20
+              }
+            ]
+          },
+          {
+            "Name": "2023-09-15 09:45:00",
+            "Value": 1220.9,
+            "detail": [
+              {
+                "Name": "tag1",
+                "Value": 10
+              },
+              {
+                "Name": "tag2",
+                "Value": 20
+              }
+            ]
+          },
+          {
+            "Name": "2023-09-15 10:00:00",
+            "Value": 1272.8,
+            "detail": [
+              {
+                "Name": "tag1",
+                "Value": 10
+              },
+              {
+                "Name": "tag2",
+                "Value": 20
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "2",
+        "name": "即時用電佔比",
+        "chartType": "doughnut",
+        "unit": {
+          "id": "1",
+          "name": "kWh"
+        },
+        "paramSummary": 1,
+        "summary": "1",
+        "timePeriod": 1,
+        "detailPeriod": "1",
+        "params": [
+          {
+            "name": "空調",
+            "groups": [],
+            "tags": [
+              "c81c0858-ed92-468c-a641-1d024f2360e9",
+              "6c2d5ea4-6ad6-4429-bf88-18e33d793cce"
+            ]
+          },
+          {
+            "name": "照明",
+            "groups": [],
+            "tags": ["1bc1a9c3-606e-43e8-8c72-4296ecac377c"]
+          },
+
+          {
+            "name": "動力",
+            "groups": [],
+            "tags": ["1bc1a9c3-606e-43e8-8c72-4296ecac377c"]
+          }
+        ],
+
+        "data": [
+          {
+            "Name": "空調",
+            "Value": 733.7985,
+            "detail": [
+              {
+                "Name": "tag1",
+                "Value": 10
+              },
+              {
+                "Name": "tag2",
+                "Value": 20
+              }
+            ]
+          },
+          {
+            "Name": "照明",
+            "Value": 178.0283,
+            "detail": [
+              {
+                "Name": "tag1",
+                "Value": 10
+              },
+              {
+                "Name": "tag2",
+                "Value": 20
+              }
+            ]
+          },
+          {
+            "Name": "動力",
+            "Value": 166.37099,
+            "detail": [
+              {
+                "Name": "tag1",
+                "Value": 10
+              },
+              {
+                "Name": "tag2",
+                "Value": 20
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "3",
+        "name": "即時需量",
+        "chartType": "radialBar",
+        "limit": 3000,
+        "paramSummary": 1,
+        "summary": "1",
+        "timePeriod": 1,
+        "detailPeriod": "1",
+        "unit": {
+          "id": "1",
+          "name": "kWh"
+        },
+        "params": [
+          {
+            "name": "耗電量",
+            "groups": [],
+            "tags": [
+              "c81c0858-ed92-468c-a641-1d024f2360e9",
+              "6c2d5ea4-6ad6-4429-bf88-18e33d793cce"
+            ]
+          }
+        ],
+        "data": [
+          {
+            "Name": "即時需量",
+            "Value": 1078.1978,
+
+            "detail": [
+              {
+                "Name": "tag1",
+                "Value": 10
+              },
+              {
+                "Name": "tag2",
+                "Value": 20
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "4",
+        "name": "本月用電比例",
+        "chartType": "bar",
+        "unit": {
+          "id": "1",
+          "name": "kWh"
+        },
+        "summary": "1",
+        "paramSummary": 1,
+        "timePeriod": 1,
+        "detailPeriod": "1",
+        "params": [
+          {
+            "name": "空調用電",
+            "groups": ["1"],
+            "tags": [
+              "c81c0858-ed92-468c-a641-1d024f2360e9",
+              "6c2d5ea4-6ad6-4429-bf88-18e33d793cce"
+            ]
+          },
+          {
+            "name": "照明用電",
+            "groups": ["1"],
+            "tags": [
+              "c81c0858-ed92-468c-a641-1d024f2360e9",
+              "6c2d5ea4-6ad6-4429-bf88-18e33d793cce"
+            ]
+          },
+
+          {
+            "name": "動力用電",
+            "groups": ["1"],
+            "tags": [
+              "c81c0858-ed92-468c-a641-1d024f2360e9",
+              "6c2d5ea4-6ad6-4429-bf88-18e33d793cce"
+            ]
+          }
+        ],
+        "data": [
+          {
+            "Name": "空調用電",
+            "Value": 372441.97,
+            "detail": [
+              {
+                "Name": "tag1",
+                "Value": 10
+              },
+              {
+                "Name": "tag2",
+                "Value": 20
+              }
+            ]
+          },
+          {
+            "Name": "照明用電",
+            "Value": 99485.92,
+            "detail": [
+              {
+                "Name": "tag1",
+                "Value": 10
+              },
+              {
+                "Name": "tag2",
+                "Value": 20
+              }
+            ]
+          },
+          {
+            "Name": "動力用電",
+            "Value": 272956.06,
+            "detail": [
+              {
+                "Name": "tag1",
+                "Value": 10
+              },
+              {
+                "Name": "tag2",
+                "Value": 20
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "5",
+        "chartType": "card",
+        "unit": {
+          "id": "1",
+          "name": "kWh"
+        },
+        "summary": "1",
+        "paramSummary": 1,
+        "timePeriod": 1,
+        "detailPeriod": "1",
+        "params": [
+          {
+            "name": "本月用電",
+            "groups": [],
+            "tags": [
+              "c81c0858-ed92-468c-a641-1d024f2360e9",
+              "6c2d5ea4-6ad6-4429-bf88-18e33d793cce"
+            ]
+          },
+          {
+            "name": "本日用電",
+            "groups": [],
+            "tags": [
+              "c81c0858-ed92-468c-a641-1d024f2360e9",
+              "6c2d5ea4-6ad6-4429-bf88-18e33d793cce"
+            ]
+          }
+        ],
+        "data": [
+          {
+            "Name": "本月用電",
+            "Value": 744883.94,
+            "detail": [
+              {
+                "Name": "tag1",
+                "Value": 10
+              },
+              {
+                "Name": "tag2",
+                "Value": 20
+              }
+            ]
+          },
+          {
+            "Name": "本日用電",
+            "Value": 3075.1453,
+            "detail": [
+              {
+                "Name": "tag1",
+                "Value": 10
+              },
+              {
+                "Name": "tag2",
+                "Value": 20
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

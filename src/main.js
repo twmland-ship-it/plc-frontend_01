@@ -1,0 +1,23 @@
+import app from "./config/configApp";
+import router from "./routes/protectedRoute";
+import store from "@/vuex/store";
+import "./static/css/style.css";
+// Vue 3rd party plugins
+import "@/core/plugins/ant-design";
+import "@/core/plugins/fonts";
+import "@/core/plugins/maps";
+import "@/core/plugins/masonry";
+import "@/core/plugins/apexcharts";
+import "@/core/plugins/unicons";
+import "@/core/components/custom";
+import "@/core/components/style";
+import "@/i18n/config";
+// 權限指令
+import { permission } from "@/directives/permission";
+
+app.config.productionTip = false;
+// 註冊權限指令
+app.directive('permission', permission);
+app.use(store);
+app.use(router);
+app.mount("#app", true);

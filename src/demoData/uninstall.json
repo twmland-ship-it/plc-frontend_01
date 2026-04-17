@@ -1,0 +1,242 @@
+{
+  "groups": [
+    {
+      "id": "7",
+      "name": "group7",
+      "tags": [
+        {
+          "id": "1",
+          "name": "tag1"
+        },
+        {
+          "id": "2",
+          "name": "tag2"
+        },
+        {
+          "id": "3",
+          "name": "tag3"
+        },
+        {
+          "id": "14",
+          "name": "tag14"
+        },
+        {
+          "id": "24",
+          "name": "tag24"
+        },
+        {
+          "id": "34",
+          "name": "tag34"
+        },
+        {
+          "id": "28",
+          "name": "tag28"
+        },
+        {
+          "id": "22",
+          "name": "tag22"
+        },
+        {
+          "id": "32",
+          "name": "tag32"
+        }
+      ]
+    },
+    {
+      "id": "8",
+      "name": "group8",
+      "tags": [
+        {
+          "id": "4",
+          "name": "tag4"
+        },
+        {
+          "id": "2",
+          "name": "tag2"
+        },
+        {
+          "id": "3",
+          "name": "tag3"
+        }
+      ]
+    },
+    {
+      "id": "9",
+      "name": "group9",
+      "tags": [
+        {
+          "id": "4",
+          "name": "tag4"
+        },
+        {
+          "id": "5",
+          "name": "tag5"
+        },
+        {
+          "id": "6",
+          "name": "tag6"
+        }
+      ]
+    }
+  ],
+
+  "tags": [
+    {
+      "id": "1",
+      "name": "tag1"
+    },
+    {
+      "id": "2",
+      "name": "tag2"
+    },
+    {
+      "id": "3",
+      "name": "tag3"
+    }
+  ],
+
+  "options": {
+    "tagClass": [
+      {
+        "id": "1",
+        "name": "進排風系統"
+      },
+      {
+        "id": "2",
+        "name": "照明系統"
+      },
+      {
+        "id": "3",
+        "name": "消防系統"
+      },
+      {
+        "id": "4",
+        "name": "其他"
+      }
+    ],
+    "groupClass": [
+      {
+        "id": "1",
+        "name": "電錶"
+      },
+      {
+        "id": "2",
+        "name": "消防"
+      },
+      {
+        "id": "3",
+        "name": "其他"
+      }
+    ],
+    "searchType": [
+      {
+        "id": "1",
+        "name": "依測點"
+      },
+      {
+        "id": "2",
+        "name": "依群組"
+      }
+    ]
+  },
+  "data": [
+    {
+      "id": "1",
+      "name": "卸載程序1",
+      "target": {
+        "id": "1",
+        "class": "2",
+        "name": "tag1"
+      },
+      "install": [
+        {
+          "id": "1",
+          "name": "tag1",
+          "value": 200,
+          "signalValue": 1
+        },
+        {
+          "id": "10",
+          "name": "tag10",
+          "value": 300,
+          "signalValue": 1
+        },
+        {
+          "id": "4",
+          "name": "tag4",
+          "value": 400,
+          "signalValue": 1
+        }
+      ],
+      "unInstall": [
+        {
+          "id": "4",
+          "name": "tag1",
+          "value": 500,
+          "signalValue": 0
+        },
+        {
+          "id": "10",
+          "name": "tag10",
+          "value": 600,
+          "signalValue": 0
+        },
+        {
+          "id": "1",
+          "name": "tag4",
+          "value": 700,
+          "signalValue": 1
+        }
+      ]
+    },
+    {
+      "id": "2",
+      "name": "卸載程序2",
+      "target": {
+        "id": "2",
+        "class": "2",
+        "name": "tag2"
+      },
+      "install": [
+        {
+          "id": "6",
+          "name": "tag6",
+          "value": 200,
+          "signalValue": 1
+        },
+        {
+          "id": "20",
+          "name": "tag20",
+          "value": 300,
+          "signalValue": 0
+        },
+        {
+          "id": "14",
+          "name": "tag14",
+          "value": 400,
+          "signalValue": 1
+        }
+      ],
+      "unInstall": [
+        {
+          "id": "9",
+          "name": "tag9",
+          "value": 500,
+          "signalValue": 0
+        },
+        {
+          "id": "33",
+          "name": "tag33",
+          "value": 600,
+          "signalValue": 1
+        },
+        {
+          "id": "26",
+          "name": "tag26",
+          "value": 700,
+          "signalValue": 1
+        }
+      ]
+    }
+  ]
+}

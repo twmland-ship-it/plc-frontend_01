@@ -1,0 +1,64 @@
+{
+  "data": [
+    {
+      "id": 1,
+      "name": "ch1",
+      "type": "TCP",
+      "data": "OPC",
+      "description": "test",
+      "status": true
+    },
+    {
+      "id": 2,
+      "name": "ch2",
+      "type": "RTU",
+      "data": "OCO",
+      "description": "test2",
+      "status": true
+    },
+    {
+      "id": 3,
+      "name": "ch3",
+      "type": "RTU",
+      "data": "OPC",
+      "description": "test3",
+      "status": false
+    },
+    {
+      "id": 4,
+      "name": "ch4",
+      "type": "TCP",
+      "data": "OCO",
+      "description": "test4",
+      "status": true
+    }
+  ],
+  "typeOptions": [
+    {
+      "id": 1,
+      "name": "TCP"
+    },
+    {
+      "id": 2,
+      "name": "OPCUA",
+      "settings": [
+        {
+          "label": "endpoint URL",
+          "type": "input",
+          "required": true
+        }
+      ]
+    }
+  ],
+
+  "dataOptions": [
+    {
+      "id": 1,
+      "name": "OCO"
+    },
+    {
+      "id": 2,
+      "name": "OPC"
+    }
+  ]
+}

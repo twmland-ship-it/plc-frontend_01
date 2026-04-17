@@ -1,0 +1,351 @@
+{
+  "options": {
+    "permission": [
+      {
+        "id": "31",
+        "value": "dashboard",
+        "name": "首頁",
+        "options": ["c", "u", "d"]
+      },
+      {
+        "id": "1",
+        "value": "gui",
+        "name": "監控系統",
+        "options": ["r"],
+        "sub": [
+          {
+            "id": "2",
+            "value": "gui-setting",
+            "name": "監控系統-頁面設定",
+            "options": ["c", "r", "u", "d"]
+          },
+          {
+            "id": "3",
+            "value": "gui-main",
+            "name": "監控系統-子系統",
+            "options": ["r", "u"]
+          }
+        ]
+      },
+      {
+        "id": "4",
+        "value": "database",
+        "name": "數據中心",
+        "options": ["r"],
+        "sub": [
+          {
+            "id": "32",
+            "value": "database-realtime",
+            "name": "數據中心-即時資料",
+            "options": ["r"]
+          },
+          {
+            "id": "5",
+            "value": "database-history",
+            "name": "數據中心-歷史報表",
+            "options": ["c", "r", "u", "d"]
+          },
+          {
+            "id": "6",
+            "value": "database-runtime",
+            "name": "數據中心-運轉時數",
+            "options": ["r", "u"]
+          },
+          {
+            "id": "33",
+            "value": "database-customReport",
+            "name": "數據中心-自訂報表",
+            "options": ["c", "r", "u", "d"]
+          }
+        ]
+      },
+      {
+        "id": "7",
+        "value": "alarm",
+        "name": "警報系統",
+        "options": ["r"],
+        "sub": [
+          {
+            "id": "8",
+            "value": "alarm-realtime",
+            "name": "警報系統-即時警報",
+            "options": ["r", "u"]
+          },
+          {
+            "id": "9",
+            "value": "alarm-history",
+            "name": "警報系統-歷史警報",
+            "options": ["r"]
+          },
+          {
+            "id": "10",
+            "value": "alarm-reliability",
+            "name": "警報系統-故障分析",
+            "options": ["c", "r", "u", "d"]
+          },
+          {
+            "id": "11",
+            "value": "alarm-reliability-analysis",
+            "name": "警報系統-可靠度分析",
+            "options": ["r", "u"]
+          }
+        ]
+      },
+      {
+        "id": "11",
+        "value": "system",
+        "name": "系統",
+        "options": ["r"],
+        "sub": [
+          {
+            "id": "12",
+            "value": "system-uninstall",
+            "name": "系統-電力卸載",
+            "options": ["c", "r", "u", "d"]
+          },
+          {
+            "id": "13",
+            "value": "system-bill",
+            "name": "系統-電耗統計",
+            "options": ["c", "r", "u", "d"]
+          },
+          {
+            "id": "34",
+            "value": "system-waterbill",
+            "name": "系統-水耗統計",
+            "options": ["c", "r", "u", "d"]
+          },
+          {
+            "id": "35",
+            "value": "system-btu",
+            "name": "系統-BTU",
+            "options": ["c", "r", "u", "d"]
+          },
+          {
+            "id": "14",
+            "value": "system-cctv",
+            "name": "系統-CCTV",
+            "options": ["c", "r", "u", "d"]
+          }
+        ]
+      },
+      {
+        "id": "15",
+        "value": "notify",
+        "name": "通知",
+        "options": ["r"],
+        "sub": [
+          {
+            "id": "16",
+            "value": "notify-setting",
+            "name": "通知-通知設定",
+            "options": ["c", "r", "u", "d"]
+          },
+          {
+            "id": "17",
+            "value": "notify-group",
+            "name": "通知-通知群組",
+            "options": ["c", "r", "u", "d"]
+          },
+          {
+            "id": "18",
+            "value": "notify-message",
+            "name": "通知-發送通知",
+            "options": ["c", "r"]
+          }
+        ]
+      },
+      {
+        "id": "19",
+        "value": "tags",
+        "name": "測點",
+        "options": ["r"],
+        "sub": [
+          {
+            "id": "20",
+            "value": "tags-region",
+            "name": "測點-地區",
+            "options": ["c", "r", "u", "d"]
+          },
+          {
+            "id": "21",
+            "value": "tags-channel",
+            "name": "測點-通道",
+            "options": ["c", "r", "u", "d"]
+          },
+          {
+            "id": "22",
+            "value": "tags-device",
+            "name": "測點-裝置",
+            "options": ["c", "r", "u", "d"]
+          },
+          {
+            "id": "23",
+            "value": "tags-group",
+            "name": "測點-群組",
+            "options": ["c", "r", "u", "d"]
+          },
+          {
+            "id": "24",
+            "value": "tags-tag",
+            "name": "測點-測點",
+            "options": ["c", "r", "u", "d"]
+          }
+        ]
+      },
+      {
+        "id": "25",
+        "value": "user",
+        "name": "人員",
+        "options": ["r"],
+        "sub": [
+          {
+            "id": "26",
+            "value": "user-role",
+            "name": "人員-權限設定",
+            "options": ["c", "r", "u", "d"]
+          },
+          {
+            "id": "27",
+            "value": "user-list",
+            "name": "人員-人員清單",
+            "options": ["c", "r", "u", "d"]
+          }
+        ]
+      },
+      {
+        "id": "28",
+        "value": "schedule",
+        "name": "排程",
+        "options": ["r"],
+        "sub": [
+          {
+            "id": "29",
+            "value": "schedule-calendar",
+            "name": "排程-日曆設定",
+            "options": ["c", "r", "u", "d"]
+          },
+          {
+            "id": "30",
+            "value": "schedule-work",
+            "name": "排程-工作排程",
+            "options": ["c", "r", "u", "d"]
+          }
+        ]
+      }
+    ]
+  },
+  "data": [
+    {
+      "id": "1",
+      "name": "管理員",
+      "permission": {
+        "1": ["r"],
+        "2": ["c", "r", "u", "d"],
+        "3": ["r", "u"],
+        "4": ["r"],
+        "5": ["r"],
+        "6": ["r"],
+        "33": ["c", "r", "u", "d"],
+        "7": ["r"],
+        "8": ["r"],
+        "9": ["r"],
+        "10": ["r"],
+        "11": ["r"],
+        "12": ["c", "r", "u", "d"],
+        "13": ["r", "u"],
+        "34": ["c", "r", "u", "d"],
+        "35": ["c", "r", "u", "d"],
+        "14": ["c", "r", "u", "d"],
+        "15": ["r"],
+        "16": ["c", "r", "u", "d"],
+        "17": ["c", "r", "u", "d"],
+        "18": ["c", "r"],
+        "19": ["r"],
+        "20": ["c", "r", "u", "d"],
+        "21": ["c", "r", "u", "d"],
+        "22": ["c", "r", "u", "d"],
+        "23": ["c", "r", "u", "d"],
+        "24": ["c", "r", "u", "d"],
+        "25": ["r"],
+        "26": ["c", "r", "u", "d"],
+        "27": ["c", "r", "u", "d"],
+        "28": ["r"],
+        "29": ["c", "r", "u", "d"],
+        "30": ["c", "r", "u", "d"]
+      }
+    },
+    {
+      "id": "2",
+      "name": "主管",
+      "permission": {
+        "1": ["r"],
+        "2": ["c", "r", "u", "d"],
+        "3": ["r", "u"],
+        "4": ["r"],
+        "5": ["r"],
+        "6": ["r"],
+        "7": ["r"],
+        "8": ["r"],
+        "9": ["r"],
+        "10": ["r"],
+        "11": ["r"],
+        "12": ["c", "r", "u", "d"],
+        "13": ["r", "u"],
+        "14": ["c", "r", "u", "d"],
+        "15": ["r"],
+        "16": ["c", "r", "u", "d"],
+        "17": ["c", "r", "u", "d"],
+        "18": ["c", "r"],
+        "19": ["r"],
+        "20": ["c", "r", "u", "d"],
+        "21": ["c", "r", "u", "d"],
+        "22": ["c", "r", "u", "d"],
+        "23": ["c", "r", "u", "d"],
+        "24": ["c", "r", "u", "d"],
+        "25": ["r"],
+        "26": ["c", "r", "u", "d"],
+        "27": ["c", "r", "u", "d"],
+        "28": ["r"],
+        "29": ["c", "r", "u", "d"],
+        "30": ["c", "r", "u", "d"]
+      }
+    },
+    {
+      "id": "3",
+      "name": "員工",
+      "permission": {
+        "1": ["r"],
+        "2": ["c", "r", "u", "d"],
+        "3": ["r", "u"],
+        "4": ["r"],
+        "5": ["r"],
+        "6": ["r"],
+        "7": ["r"],
+        "8": ["r"],
+        "9": ["r"],
+        "10": ["r"],
+        "11": ["r"],
+        "12": ["c", "r", "u", "d"],
+        "13": ["r", "u"],
+        "14": ["c", "r", "u", "d"],
+        "15": ["r"],
+        "16": ["c", "r", "u", "d"],
+        "17": ["c", "r", "u", "d"],
+        "18": ["c", "r"],
+        "19": ["r"],
+        "20": ["c", "r", "u", "d"],
+        "21": ["c", "r", "u", "d"],
+        "22": ["c", "r", "u", "d"],
+        "23": ["c", "r", "u", "d"],
+        "24": ["c", "r", "u", "d"],
+        "25": ["r"],
+        "26": ["c", "r", "u", "d"],
+        "27": ["c", "r", "u", "d"],
+        "28": ["r"],
+        "29": ["c", "r", "u", "d"],
+        "30": ["c", "r", "u", "d"]
+      }
+    }
+  ]
+}

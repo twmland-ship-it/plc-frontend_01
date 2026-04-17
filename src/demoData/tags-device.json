@@ -1,0 +1,207 @@
+{
+  "dynamicForm": {
+    "TCP": [
+      { "type": "input", "required": true, "label": "IP" },
+      { "type": "input", "required": true, "label": "Port" },
+      { "type": "input", "required": true, "label": "站號" }
+    ],
+    "RTU": [
+      { "type": "input", "required": true, "label": "Port" },
+      {
+        "type": "select",
+        "required": true,
+        "label": "包率",
+        "options": [
+          {
+            "id": 1,
+            "name": "300 Baud"
+          },
+          {
+            "id": 2,
+            "name": "600 Baud"
+          },
+          {
+            "id": 3,
+            "name": "1200 Baud"
+          },
+          {
+            "id": 4,
+            "name": "2400 Baud"
+          },
+          {
+            "id": 5,
+            "name": "4800 Baud"
+          },
+          {
+            "id": 6,
+            "name": "9600 Baud"
+          },
+          {
+            "id": 7,
+            "name": "14400 Baud"
+          }
+        ]
+      },
+      { "type": "input", "required": true, "label": "站號" }
+    ]
+  },
+  "options": {
+    "rateOptions": [
+      {
+        "id": 1,
+        "name": "300 Baud"
+      },
+      {
+        "id": 2,
+        "name": "600 Baud"
+      },
+      {
+        "id": 3,
+        "name": "1200 Baud"
+      },
+      {
+        "id": 4,
+        "name": "2400 Baud"
+      },
+      {
+        "id": 5,
+        "name": "4800 Baud"
+      },
+      {
+        "id": 6,
+        "name": "9600 Baud"
+      },
+      {
+        "id": 7,
+        "name": "14400 Baud"
+      }
+    ],
+    "addressStartOptions": [
+      {
+        "id": 1,
+        "name": "從0開始"
+      },
+      {
+        "id": 2,
+        "name": "從1開始"
+      }
+    ],
+    "dataFormateOptions": [
+      {
+        "id": 1,
+        "name": "ABCD(正序)"
+      },
+      {
+        "id": 2,
+        "name": "BADC(按照單字反轉)"
+      },
+      {
+        "id": 3,
+        "name": "CDAB(按照雙字反轉)"
+      },
+      {
+        "id": 4,
+        "name": "DCBA(倒序)"
+      }
+    ]
+  },
+
+  "devices": [
+    {
+      "id": "1",
+      "name": "device1",
+      "description": "test",
+      "dataFormat": {
+        "id": 1,
+        "name": "ABCD(正序)"
+      },
+      "addressStart": {
+        "id": 1,
+        "name": "從0開始"
+      },
+      "channel": {
+        "id": 1,
+        "name": "ch1",
+        "type": "TCP"
+      },
+      "ip": "127.0.0.1",
+      "port": "8000",
+      "station": 1,
+      "regionid": ["1", "2", "3"],
+      "classid": ["1", "2", "3"],
+      "status": true
+    },
+    {
+      "id": "2",
+      "name": "device2",
+      "description": "test",
+      "dataFormat": {
+        "id": 2,
+        "name": "BADC(按照單字反轉)"
+      },
+      "addressStart": {
+        "id": 2,
+        "name": "從1開始"
+      },
+      "channel": {
+        "id": 2,
+        "name": "ch2",
+        "type": "RTU"
+      },
+      "rate": "9600",
+      "port": "com1",
+      "station": 2,
+      "regionid": ["1", "2", "3"],
+      "classid": ["1", "2", "3"],
+      "status": true
+    },
+    {
+      "id": "3",
+      "name": "device3",
+      "description": "test",
+      "dataFormat": {
+        "id": 2,
+        "name": "CDAB(按照雙字反轉)"
+      },
+      "addressStart": {
+        "id": 2,
+        "name": "從1開始"
+      },
+      "channel": {
+        "id": 2,
+        "name": "ch2",
+        "type": "RTU"
+      },
+      "rate": "19200",
+      "port": "com3",
+      "station": 1,
+      "regionid": ["1", "2", "3", "4"],
+      "classid": ["1", "2", "3"],
+      "status": false
+    },
+    {
+      "id": "4",
+      "name": "device4",
+      "description": "test",
+      "dataFormat": {
+        "id": 2,
+        "name": "DCBA(倒序)"
+      },
+      "addressStart": {
+        "id": 1,
+        "name": "從0開始"
+      },
+      "channel": {
+        "id": 1,
+        "name": "ch1",
+        "type": "TCP"
+      },
+      "ip": "127.0.0.1",
+      "port": "8001",
+      "station": 2,
+      "regionid": ["1", "2", "3"],
+      "classid": ["1", "2", "3", "4"],
+      "status": true
+    }
+  ]
+}

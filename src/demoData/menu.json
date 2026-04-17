@@ -1,0 +1,75 @@
+{
+  "guiList": [
+    {
+      "id": 1,
+      "path": "firework",
+      "name": "消防系統",
+      "children": [
+        {
+          "id": 1,
+          "path": "test1",
+          "name": "列表測試1"
+        },
+        {
+          "id": 2,
+          "path": "test2",
+          "name": "列表測試2"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "path": "cctv",
+      "name": "攝影機系統",
+      "children": [
+        {
+          "id": 3,
+          "path": "test1",
+          "name": "圖控測試1"
+        },
+        {
+          "id": 4,
+          "path": "test2",
+          "name": "圖控測試2"
+        }
+      ]
+    }
+  ],
+  "permission": {
+    "dashboard": ["r", "u", "c", "d"],
+    "gui": ["r"],
+    "gui-setting": ["r", "c", "u", "d"],
+    "gui-main": ["c", "r", "u", "d"],
+    "database": ["r"],
+    "database-history": ["c", "r", "u", "d"],
+    "database-realtime": ["r"],
+    "database-runtime": ["r", "u"],
+    "database-customReport": ["r"],
+    "alarm": ["r"],
+    "alarm-realtime": ["r", "u"],
+    "alarm-history": ["r"],
+    "alarm-reliability": ["c", "r", "u", "d"],
+    "system": ["r"],
+    "system-uninstall": ["c", "r", "u", "d"],
+    "system-bill": ["c", "r", "u", "d"],
+    "system-waterbill": ["c", "r", "u", "d"],
+    "system-btu": ["c", "r", "u", "d"],
+    "system-cctv": ["c", "r", "u", "d"],
+    "notify": ["r"],
+    "notify-setting": ["c", "r", "u", "d"],
+    "notify-group": ["c", "r", "u", "d"],
+    "notify-message": ["c", "r"],
+    "tags": ["r"],
+    "tags-region": ["c", "r", "u", "d"],
+    "tags-channel": ["c", "r", "u", "d"],
+    "tags-device": ["c", "r", "u", "d"],
+    "tags-group": ["c", "r", "u", "d"],
+    "tags-tag": ["c", "r", "u", "d"],
+    "user": ["r"],
+    "user-list": ["c", "r", "u", "d"],
+    "user-role": ["c", "r", "u", "d"],
+    "schedule": ["r"],
+    "schedule-calendar": ["c", "r", "u", "d"],
+    "schedule-work": ["c", "r", "u", "d"]
+  }
+}

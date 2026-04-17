@@ -1,0 +1,17 @@
+version: "3"
+
+services:
+  frontend:
+    image: frontend:latest
+    ports:
+      # nginx.conf 為 listen 8345，故容器埠亦為 8345（與 Aspire 用 Dockerfile+nginx.docker.conf listen 80 不同）
+      - "8345:8345"
+    command: /bin/sh -c "rm -f /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"
+    networks:
+      - app-network
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+
+networks:
+  app-network:
+    driver: bridge

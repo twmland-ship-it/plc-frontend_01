@@ -1,0 +1,1020 @@
+===============================================
+橙設物業管理系統 - 版本修改紀錄
+===============================================
+
+
+
+版本：v2.2.37 (OCOGUI SDK 嵌入模式修正)
+編譯日期：2025-12-07
+編譯 Hash：N/A
+編譯時間：N/A
+
+===============================================
+===============================================
+主要修正項目 (v2.2.37 OCOGUI SDK 嵌入模式修正)
+
+1. 🔧 修復 SDK 模式容器渲染時機問題
+- 原本 SDK 容器使用 v-else 條件渲染，導致在 loadSdk() 執行 display() 時容器尚未渲染
+- 改為容器始終存在（使用 CSS display 控制顯示/隱藏）
+- 先設定 sdkLoading = false，等待 Vue 渲染完成後再執行 display()
+
+2. 🏷️ 簡化嵌入模式選項標籤
+- 「iframe（標準）」→「iframe」
+- 「SDK（高效能）」→「SDK」
+
+影響檔案：
+✅ src/components/oco/gui/iframe/Index.vue — SDK 容器改為始終渲染
+✅ src/components/oco/gui/iframe/main.js — 修正 loadSdk() 渲染時機
+✅ src/view/oco/gui/setting/main.js — 簡化嵌入模式選項標籤
+✅ src/layout/withAdminLayout.vue — Footer 版本/日期更新至 v2.2.37 / 2025-12-07
+✅ package.json — 版本號更新至 v2.2.37
+
+測試驗證：
+✅ iframe 模式正常運作
+✅ SDK 模式正常載入並顯示視圖
+
+
+版本：v2.2.36 (外部連結 iframe 內網最佳化)
+編譯日期：2025-09-28 10:00
+編譯 Hash：N/A
+編譯時間：N/A
+
+===============================================
+===============================================
+主要修正項目 (v2.2.36 外部連結內網最佳化)
+
+1. 🌐 localhost/127.0.0.1 自動重寫為目前主機名
+- 當外部連結為 http://localhost 或 http://127.0.0.1 時，自動改寫為 http://<目前主機名>:<原埠>，避免不同電腦各自指向本機導致內容不一致。
+
+2. 🧩 同源 iframe 自動消除內頁外距
+- 同源情境下於 onload 移除 iframe 內頁 html/body 的 margin/padding，並將第一個 h1/h2/h3 的 margin-top 設為 0，消除頂部空白。
+- 跨網域情境會自動略過（受同源政策限制）。
+
+3. 📚 文檔補全
+- README.md 新增「外部連結（iframe）— 內網行為與限制」說明。
+- 補充同源/跨網域行為差異與反向代理建議。
+
+影響檔案：
+✅ src/components/oco/gui/iframe/Index.vue — 綁定 onload 事件
+✅ src/components/oco/gui/iframe/main.js — localhost/127.0.0.1 重寫、同源去除外距
+✅ src/layout/withAdminLayout.vue — Footer 版本/日期更新至 v2.2.36 / 2025-09-28
+✅ package.json — 版本號更新至 v2.2.36
+✅ docs/openapi.yaml — info.version=2.2.36
+✅ README.md — 版本徽章、VUE_APP_VERSION 更新；新增 iframe 說明章節
+✅ project-rules.md、TechnicalPrerequisites.md、TechnicalConstraints.md — 版本與最後更新日期同步
+
+測試驗證：
+✅ 於同一台伺服器（同源）下嵌入頁面：頂部空白消失
+✅ 以 http://<伺服器IP>:<port> 取代 localhost 後：不同電腦視覺一致
+✅ 跨網域連結：不再嘗試修改內頁，行為符合瀏覽器安全策略
+
+
+版本：v2.2.35 (CCTV 視窗拖曳修正＋文件補全)
+編譯日期：2025-09-09 16:30
+編譯 Hash：6c3c5005cb10e2b0
+編譯時間：12931ms (12.93秒)
+
+===============================================
+===============================================
+主要修正項目 (v2.2.35 CCTV 拖曳修正＋文件補全)
+
+1. 🖱️ CCTV 視窗拖曳修正
+- 擴充拖曳初始化選擇器：useModalDrag('.cctv-modal, .cctv-modal-wrap')
+- 若無 .ant-modal-header，自動建立 40px 拖曳把手區
+- 維持左上角定位（top: 12px, left: 12px）與 z-index: 3000，確保不被遮擋
+
+2. ⚡ 即時警報展開模式體驗確認
+- 首次進頁先顯示即時清單，歷史改在背景載入（非阻塞）
+- 合併策略：Id 去重，且「即時覆蓋歴史」；排序依 AlarmTime 由新到舊
+- 新警報優先顯示，不受背景載入影響
+
+3. 📚 文件同步補全
+- 更新 OpenAPI info.version 至 2.2.35（docs/openapi.yaml）
+- 更新 README 版本徽章與 VUE_APP_VERSION 範例至 2.2.35
+- 更新 project-rules.md、TechnicalPrerequisites.md、TechnicalConstraints.md 的版本與最後更新日期
+
+影響檔案：
+✅ package.json — 版本號更新至 v2.2.35
+✅ src/layout/withAdminLayout.vue — footer 顯示版本/日期；CCTV modal 樣式（z-index、定位）維持
+✅ src/components/oco/util/cctvModal/main.js — 拖曳選擇器修正（.cctv-modal, .cctv-modal-wrap）
+✅ docs/openapi.yaml — info.version=2.2.35
+✅ README.md — 徽章與環境變數版本更新
+✅ project-rules.md、TechnicalPrerequisites.md、TechnicalConstraints.md — 版本與日期更新
+
+測試驗證：
+✅ CCTV 彈窗可拖曳，缺標題時自動產生把手
+✅ CCTV 視窗固定左上角顯示且不被其他區塊遮擋
+✅ 展開後先顯示即時列，歷史背景載入完成後合併，最新警報優先
+
+
+版本：v2.2.34 (即時警報「展開/縮回」＋展開自動載入近24小時歷史)
+編譯日期：2025-09-09 16:08
+編譯 Hash：cbba9fdbd50f4b95
+編譯時間：14259ms (14.26秒)
+
+===============================================
+===============================================
+主要修正項目 (v2.2.34 即時警報展開模式＋歷史補滿)
+
+1. 🔎 展開/縮回功能
+- 警報面板新增「展開/縮回」按鈕
+- 展開時表格視窗高度固定 600px；縮回時恢復原狀
+- 展開樣式不遮左側側邊欄，維持原版面
+
+2. 📚 展開時自動載入歷史補滿
+- 展開時自動向 API 取得「最近 24 小時、最多 50 筆、全部設備」的歷史警報
+- 與即時清單合併顯示、依時間由新到舊排序、依 Id 去重
+- 縮回時清除附加的歷史列，回到僅顯示即時
+
+3. 🎨 視覺與可用性
+- 就算即時只有 1–2 筆，展開後透過 min-height 也會撐起可視區，能一次看到更多列
+- 行為與「警報」標題樣式一致；不影響 CCTV 視窗定位與拖曳
+
+影響檔案：
+✅ src/components/oco/alarm/index.js — 新增展開狀態、載入歷史、合併清單
+✅ src/components/oco/alarm/Realtime.vue — 樣式強化（展開時 min-height）
+
+測試驗證：
+✅ 展開時：自動載入近 24 小時歷史，最多 50 筆，與即時合併顯示
+✅ 縮回時：歷史列清除，只保留即時
+✅ 表格高度：展開固定 600px，少量資料時仍能看到較多列
+✅ 版面：不遮左側側邊欄，維持既有佈局
+
+
+版本：v2.2.33 (警報CCTV視窗定位與拖曳)
+編譯日期：2025-09-09 15:22
+編譯 Hash：5dd5a180ec9155e3
+編譯時間：165073ms (165.07秒)
+
+===============================================
+===============================================
+主要修正項目 (v2.2.33 警報CCTV視窗定位與拖曳)
+
+1. 🪟 視窗定位
+- 將警報觸發之 CCTV 視窗由置中改為固定左上角顯示（top: 12px, left: 12px）
+- 取消水平置中的 margin，自訂樣式覆寫 Ant Modal 預設配置
+
+2. 🖱️ 視窗可拖曳
+- 啟用 useModalDrag，支援拖曳移動 CCTV 視窗位置
+- 拖曳把手優先使用 .ant-modal-header，若無則自動建立 40px 拖曳區
+
+3. 影響檔案
+✅ src/layout/withAdminLayout.vue — CCTV sdModal 加上 class="cctv-modal"，並新增左上角樣式
+✅ src/components/oco/alarm/Realtime.vue — 警報頁內 CCTV sdModal 同步加上 class 與樣式
+✅ src/components/oco/util/cctvModal/main.js — 掛載 useModalDrag('.cctv-modal') 啟用拖曳
+
+4. 測試驗證
+✅ 觸發警報自動彈窗：視窗出現在左上角且可拖曳
+✅ 警報頁面手動開啟：視窗同樣左上角且可拖曳
+✅ 拖曳邊界限制：不會完全拖出視窗外
+
+
+版本：v2.2.32 (EMAIL通知設定API修正版)
+編譯日期：2025-09-05 12:29
+編譯 Hash：6f51755853a7ffa9
+編譯時間：11103ms (11.10秒)
+
+===============================================
+===============================================
+主要修正項目 (v2.2.32 EMAIL通知設定API修正版)
+
+1. **🔧 API資料修正** ⭐⭐⭐⭐⭐
+- 啟用真實API呼叫：優先使用 `GET /api/Message/GetSMTPSetting`
+- 修正測試資料：ProtocalCode從0(SSL)改為1(TLS)
+- 加入API錯誤處理：失敗時使用備援測試資料
+- 確保正確顯示用戶實際設定的通訊協定
+
+2. **📊 資料流程優化** ⭐⭐⭐⭐
+- 優先級：真實API > 備援測試資料
+- 錯誤處理：API失敗時不會中斷功能
+- 除錯資訊：加入API失敗警告訊息
+- 資料一致性：確保前後端資料同步
+
+影響檔案：
+✅ src/vuex/modules/notify/actionCreator.js - API呼叫邏輯修正
+✅ package.json - 版本號更新至v2.2.32
+
+測試驗證：
+✅ 真實API呼叫正常運作
+✅ 正確顯示ProtocalCode=1(TLS)而非0(SSL)
+✅ API失敗時備援機制正常
+✅ 通訊協定下拉選單顯示正確選項
+
+===============================================
+歷史修正項目 (v2.2.31 EMAIL通知設定API整合版)
+===============================================
+
+1. **📧 EMAIL通知設定API整合** ⭐⭐⭐⭐⭐
+- 整合新的SMTP設定API：`GET /api/Message/GetSMTPSetting`
+- 整合SMTP更新API：`POST /api/Message/UpdateSMTPSetting`
+- 通訊協定下拉選單：從API動態載入ProtocalList (SSL/TLS)
+- 正確顯示協定名稱：顯示ProtocalName而非ProtocalCode
+
+2. **🔧 表單欄位優化** ⭐⭐⭐⭐
+- 更新欄位標籤：符合API規格要求
+  - 網域名稱 (ServerDomain)
+  - 通信埠 (Port)
+  - 送件者電子郵件信箱 (SenderEmail)
+  - 送件者電子郵件密碼 (SenderPassword)
+- 加強表單驗證：email格式驗證、數字格式驗證
+- 密碼欄位改為password類型：提升安全性
+
+3. **📊 資料綁定修正** ⭐⭐⭐⭐
+- 修正watch監聽器：確保API載入完成後正確更新表單
+- 修正protocol值處理：正確對應ProtocalCode和ProtocalName
+- 修正提交資料格式：確保Port和ProtocalCode為數字類型
+- 解決初始化順序問題：避免lexical declaration錯誤
+
+4. **🎨 用戶體驗提升** ⭐⭐⭐
+- 加入placeholder提示：提供輸入範例
+- 改善錯誤訊息：更明確的驗證提示
+- 加入除錯資訊：便於開發和問題診斷
+- 保持向下相容：支援現有的demo資料格式
+
+影響檔案：
+✅ src/vuex/modules/notify/actionCreator.js - API整合和資料處理
+✅ src/vuex/modules/notify/mutations.js - 新增protocolList狀態管理
+✅ src/view/oco/notify/setting/email/Index.vue - 表單UI更新
+✅ src/view/oco/notify/setting/email/main.js - 邏輯修正和watch監聽
+✅ package.json - 版本號更新至v2.2.31
+
+測試驗證：
+✅ 通訊協定下拉選單正確顯示SSL/TLS選項
+✅ 表單資料正確載入和顯示
+✅ 提交時正確呼叫POST API
+✅ 表單驗證功能正常運作
+✅ 錯誤處理和成功提示正常顯示
+
+===============================================
+歷史修正項目 (v2.2.30 可靠度分析功能完整實施)
+===============================================
+
+1. **📊 可靠度分析功能完整實施** ⭐⭐⭐⭐⭐
+- 新增可靠度分析頁面：路由 `/alarm/reliability-analysis`
+- 實施完整的 API 整合：`GET /api/ReliabilityAnalysis/GetReliabilityAnalysList`
+- 新增設備運轉時間重置功能：`POST /api/System/ResetOperationgHour`
+- 修正 API 路徑問題：添加 `/api/` 前綴確保代理正確轉發
+
+2. **🔧 明細視窗 DataGrid 功能** ⭐⭐⭐⭐⭐
+- 故障時間和運轉時間使用專業 DataGrid 顯示
+- 支援分頁功能：預設每頁20筆，可選10/20/50/100/200筆
+- 支援時間排序：預設按時間降冪排序（最新在前）
+- 響應式設計：支援不同螢幕尺寸，最大高度300px可滾動
+
+3. **🎨 視覺設計優化** ⭐⭐⭐⭐
+- 故障時間表格：紅色主題，清楚標示故障記錄
+- 運轉時間表格：綠色主題，清楚標示運轉記錄
+- 原生 HTML Modal：解決 Ant Design Vue Modal 顯示問題
+- 自定義滾動條樣式：提升視覺體驗
+
+4. **📋 權限控制與用戶體驗** ⭐⭐⭐⭐
+- 完整的權限檢查：`alarm-reliability-analysis` 讀取/更新權限
+- 明細按鈕條件顯示：需要讀取權限且有明細數據
+- 重置功能確認對話框：防止誤操作
+- 調試信息和錯誤處理：便於問題診斷
+
+5. **📚 文檔完整更新** ⭐⭐⭐
+- 更新 OpenAPI 3.0 規格：新增可靠度分析 API 定義
+- 更新 README.md：新增可靠度分析功能說明
+- 更新開發規則文檔：新增可靠度分析特定開發規範
+- 新增實施記錄文檔：詳細記錄開發過程和問題解決
+
+影響檔案：
+✅ src/view/oco/alarm/reliability-analysis/ - 完整的可靠度分析功能
+✅ src/vuex/modules/alarm/actionCreator.js - API 路徑修正
+✅ src/core/plugins/ant-design.js - Typography 組件支援
+✅ docs/openapi.yaml - API 文檔更新
+✅ README.md - 功能說明更新
+✅ project-rules.md - 開發規則更新
+
+測試驗證：
+✅ 可靠度分析頁面正常載入和顯示數據
+✅ 明細按鈕正常彈出 DataGrid 視窗
+✅ 分頁和排序功能正常運作
+✅ 重置設備功能正常執行
+✅ 權限控制正確生效
+✅ 響應式設計在不同螢幕尺寸下正常運作
+
+===============================================
+===============================================
+主要修正項目 (v2.2.29 電費計算低壓非時間電價年月選擇功能)
+===============================================
+
+1. **⚡ 電費計算 - 低壓非時間電價年月選擇功能**
+- 新增年月選擇 Modal：新增項目時先選擇電價實施年月 (2020-2100年, 1-12月)
+- 新增臨時用電倍數設定欄位，支援小數輸入，預設值為1
+- 移除元件內的年月選擇，改由主頁面統一管理年月資料
+- 完整的 API 整合：`POST /electricity-rate/power-supply/0/segment/0/details`
+
+2. **🔧 技術架構改進**
+- 低壓非時間電價元件改為受控元件，支援 v-model 雙向資料綁定
+- 新增專用 Vuex actions：`addLowVoltageNonTimeFee`, `editLowVoltageNonTimeFee`
+- 新增年月選擇介面，提供清楚的使用者體驗
+- 完整的資料格式轉換和 API 請求結構
+
+3. **📋 API 更新**
+- 新增 `GET /electricity-rate/power-supply/0/segment/0/time-settings` 支援
+- 完整的 POST 請求格式，包含 DetailItems 夏月/非夏月資料
+- 支援 TemporaryUsageMultiplier 臨時用電倍數參數
+- 正確的固定值處理和資料映射
+
+4. **📚 文檔更新**
+- 更新 OpenAPI 3.0 規格文檔，新增電價設定相關 Schema
+- 更新 README.md 功能說明，新增電費計算功能描述
+- 更新開發規則文檔 (project-rules.md)，新增電費計算元件開發規則
+- 新增版本修改記錄和 CHANGELOG.md
+
+5. **🎯 使用者體驗改進**
+- 簡化電價設定流程：年月選擇 → 詳細設定
+- 清楚的介面標示和備註說明 (非臨時用電為1，臨時電依規定為大於1的小數)
+- 響應式設計，支援不同螢幕尺寸
+- 統一的 Modal 設計風格
+
+影響檔案：
+✅ src/components/oco/bill/fee/lowVoltageNonTime/Index.vue - 元件改為受控元件
+✅ src/view/oco/system/bill/fee/Index.vue - 新增年月選擇 Modal
+✅ src/view/oco/system/bill/fee/main.js - 新增年月選擇邏輯
+✅ src/vuex/modules/bill/actionCreator.js - 新增專用 API actions
+✅ docs/openapi.yaml - 新增電價設定 Schema
+✅ README.md - 新增功能說明
+✅ project-rules.md - 新增開發規則
+
+測試驗證：
+✅ 年月選擇 Modal 正常開啟和關閉
+✅ 年月資料正確傳遞到詳細設定頁面
+✅ 臨時用電倍數欄位支援小數輸入
+✅ API 請求格式正確，包含所有必要欄位
+✅ 編輯功能正確載入現有資料
+✅ 響應式設計在不同螢幕尺寸下正常運作
+
+===============================================
+===============================================
+主要修正項目 (v2.2.28 首頁圓餅圖厚度與中心文字自適應)
+===============================================
+
+版本：v2.2.28 (首頁圓餅圖厚度與中心文字自適應)
+編譯日期：2025-08-29
+編譯 Hash：b88bed157e0deff5
+編譯時間：14436ms (14.44秒)
+
+===============================================
+===============================================
+主要修正項目 (v2.2.28 首頁圓餅圖厚度與中心自適應)
+===============================================
+
+1. **🍩 首頁圓餅圖厚度視覺減半**
+- cutout 由 60% → 80%，甜甜圈環厚度減半
+- 影響檔案：`src/view/oco/home/index.js`
+
+2. **⭕ 中心白圈與字體自動適配**
+- 依中心數字寬度自動放大白圈，必要時自動縮小字體，確保不被環遮擋
+- 影響檔案：`src/components/utilities/chartjs.vue`
+
+3. **📄 文件補全**
+- 新增 `docs/openapi.yaml`（OpenAPI 3.0 子集）
+- 新增 `project-rules.md`、`TechnicalPrerequisites.md`、`TechnicalConstraints.md`
+
+測試驗證：
+- 首頁圓餅圖中心顯示長數字（例如 100,000,000）時，白圈會自動放大並保持置中；若空間不足字體會縮小
+- 其他圖表類型不受影響
+
+主要修正項目 (v2.2.25 電費契約設定新增容量欄位)
+===============================================
+
+1. **⚡ 電費契約設定新增兩個容量欄位**
+- 新增「非夏月契約容量」欄位，對應後端 API 的 `NonSummerMonthContractCapacity`
+- 新增「經常契約容量」欄位，對應後端 API 的 `ContractCapacity`
+- 欄位顯示條件：用電種類=低壓、契約=需量契約、時段=非時間電價
+
+2. **🔧 前端 UI 修改**
+- 在電費契約設定表單中新增兩個數值輸入欄位
+- 位置：時段選擇與儲存按鈕之間
+- 欄位類型：number，支援數值輸入
+- 添加適當的 placeholder 提示文字
+
+3. **⚙️ 資料邏輯修改**
+- 修改 Vuex store 的 `addSetting` 函數，新增兩個欄位參數
+- 修改 Vuex store 的 `editSetting` 函數，新增兩個欄位參數
+- 修改 Vuex store 的 `getSettingList` 函數，處理新欄位的讀取和對應
+- 根據契約類型決定使用哪些容量欄位：
+  - 低壓需量契約非時間電價：使用新的專用欄位
+  - 其他契約類型：使用現有的容量欄位
+
+4. **📁 修改的檔案**
+- `src/view/oco/system/bill/setting/Index.vue` - 新增 UI 欄位
+- `src/view/oco/system/bill/setting/main.js` - 新增資料處理邏輯
+- `src/vuex/modules/bill/actionCreator.js` - 修改 API 呼叫邏輯
+
+5. **🔄 資料流程**
+- 新增/編輯時：根據契約類型決定發送哪些欄位到後端
+- 讀取時：從後端讀取新欄位並正確對應到前端
+- 確保資料一致性和向後相容性
+
+
+
+修改完成總結
+1. 已完成的修改
+✅ Vuex store 的 addSetting 函數
+新增 nonSummerCapacity 和 regularCapacity 參數
+根據契約類型決定使用哪些容量欄位
+低壓需量契約非時間電價：使用 NonSummerMonthContractCapacity 和 ContractCapacity
+其他契約類型：使用現有的 ContractCapacity
+✅ Vuex store 的 editSetting 函數
+同樣新增兩個新參數
+相同的邏輯處理
+✅ Vuex store 的 getSettingList 函數
+從後端讀取 NonSummerMonthContractCapacity 欄位
+根據契約類型正確對應容量欄位
+確保資料在前端正確顯示
+2. 資料流程邏輯
+新增/編輯時（前端 → 後端）
+Apply to 版本修改紀錄.txt
+讀取時（後端 → 前端）
+Apply to 版本修改紀錄.txt
+3. 欄位對應關係
+前端欄位	後端 API 欄位	用途	使用條件
+nonSummerCapacity	NonSummerMonthContractCapacity	非夏月契約容量	低壓+需量契約+非時間電價
+regularCapacity	ContractCapacity	經常契約容量	低壓+需量契約+非時間電價
+capacity	ContractCapacity	一般契約容量	其他契約類型
+4. 現在的功能狀態
+✅ 前端 UI：兩個新欄位已顯示
+✅ 資料綁定：Vue 響應式資料已設定
+✅ API 傳送：新增和編輯時會發送正確的欄位
+✅ 資料讀取：從後端讀取時會正確對應欄位
+✅ 條件邏輯：根據契約類型決定使用哪些欄位
+5. 測試建議
+現在您可以測試：
+新增功能：
+選擇「低壓」+「需量契約」+「非時間電價」
+填寫「非夏月契約容量」和「經常契約容量」
+儲存後檢查後端是否收到正確的資料
+編輯功能：
+編輯現有項目，確認新欄位能正確顯示和編輯
+檢查資料是否正確保存
+其他契約類型：
+測試其他契約類型，確認不會發送新欄位
+確認現有功能不受影響
+所有修改已經完成，現在前端應該能夠正確地與後端 API 整合，處理「非夏月契約容量」和「經常契約容量」這兩個新欄位了！
+
+===============================================
+主要修正項目 (v2.2.24 Chart 互動穩定性再加固)
+===============================================
+
+1. **🧱 與 Vue 解耦**
+- Chart 實例以 `markRaw` 包裝，避免被 Vue 追蹤
+- labels/datasets/options/tooltip 初始化與更新一律深拷貝為純物件
+- 更新時改為直接替換 datasets，排除 Proxy 殘留
+
+2. **🍩 圓餅圖**
+- 維持 cutout 與中心 plugin，更新路徑不觸發動畫器殘留
+
+===============================================
+主要修正項目 (v2.2.23 圖表插件化與穩定性加固)
+===============================================
+
+1. **🧩 Chart.js 插件化**
+- 圓餅圖中心（白圈＋數字）改為 plugin 在 canvas 上繪製，與資料/DOM 更新解耦
+- 折線/長條加入 Overlay plugin（平均線＋最新值徽章）
+
+2. **🛡️ 穩定性**
+- 維持 doughnut `cutout`，避免圓心消失
+- options 雜湊避免不必要重建；canvas 存活檢查，失效時自動 stop→destroy→reinit
+
+===============================================
+主要修正項目 (v2.2.22 權限與選單顯示修正)
+===============================================
+
+1. **🧭 父選單顯示條件修正**
+- 父層（系統、警報系統）顯示改為「任一子項有 read 即顯示」
+- 關閉單一子項（如 系統-CCTV、警報系統-故障分析）時不會把整個父層隱藏
+- 影響檔案：`src/layout/Aside.vue`
+
+2. **⚡ 權限存檔即時生效**
+- 存檔成功且為當前登入者的 RoleId 時：即時抓取 `/api/role/{id}` 更新 `localStorage.permission`，並觸發 storage 事件刷新權限（無需重登）
+- 影響檔案：`src/vuex/modules/user/actionCreator.js`
+
+===============================================
+主要修正項目 (v2.2.21 首頁佈局同步修正)
+===============================================
+
+1. **🔄 首頁佈局後端優先與防快取**
+- 載入 `GetFirstPageItemContent` 時加入 `_t=timestamp` 參數避免快取
+- 首頁初始化以後端回傳 `layout` 覆寫本機快取，確保無痕/新分頁一致
+- 保留 `layout` 至前端資料映射，GridStack 初始化可直接套用
+
+2. **✅ 穩定性**
+- Chart.js 元件已於前版關閉動畫並調整銷毀順序，避免 getContext 錯誤
+
+===============================================
+主要修正項目 (v2.2.20 儀表板穩定性修正)
+===============================================
+
+1. **🐛 修復首頁圖表數值消失與 getContext 錯誤**
+- 問題：首頁元件執行一段時間後，圖表消失並於 `helpers.segment.mjs` 拋出 `Cannot read properties of null (reading 'getContext')`
+- 原因：Canvas 已被替換/銷毀，但 Chart.js Animator 仍持續嘗試重繪
+- 修正：
+  - 在所有 `chart.destroy()` 前，加上 `chart.stop()` 中止動畫
+  - 更新時改用 `chart.update('none')` 停用動畫
+  - 初始化將 `animation.duration` 設為 0，避免殘留動畫
+  - 監測到 canvas 失效時，正確 stop → destroy → 重新初始化
+- 影響檔案：
+  - `src/components/utilities/chartjs.vue`
+
+19. **🔧 卡片覆蓋底部 Footer 問題修正** ⭐⭐⭐⭐⭐
+問題：首頁卡片覆蓋了 withAdminLayout.vue 中的底部版權資訊和版本資訊
+原因：卡片容器沒有與頁面底部保持適當的間距
+
+解決方案：
+- 為 ChartContainer 添加底部間距：`margin-bottom: 120px`
+- 為 .admin-footer 添加樣式確保不被覆蓋：
+  - `position: relative !important`
+  - `z-index: 1000 !important`
+  - `margin-top: 120px !important`
+- 調整卡片最小高度從 400px 減少到 320px，避免過高
+
+修改檔案：
+✅ src/view/oco/home/style.js - ChartContainer 底部間距
+✅ src/layout/withAdminLayout.vue - Footer 樣式保護
+
+測試驗證：
+✅ 卡片不再覆蓋底部版權資訊
+✅ Footer 完整顯示 "2023 © 橙設科技有限公司"
+✅ Footer 完整顯示 "版本 v2.2.17 | 更新日期：2025-07-30"
+✅ 頁面佈局清晰，有明確的分隔
+
+20. **🔧 圓餅圖和趨勢圖消失問題修正** ⭐⭐⭐⭐⭐
+問題：圓餅圖和趨勢圖在一小段時間後會自動消失
+原因：每10秒自動更新數據時，圖表重新渲染失敗
+
+解決方案：
+- 增強數據驗證：
+  - 在 chartjs.vue 中添加數據有效性檢查
+  - 在 DoughnutChart.vue 中添加數據和標籤驗證
+  - 在首頁數據更新邏輯中添加回應數據檢查
+- 添加穩定的組件 Key：
+  - DoughnutChart: `:key="doughnut-${v.id}-${v.data.labels?.length || 0}"`
+  - Chart (趨勢圖): `:key="line-${v.id}-${v.data.labels?.length || 0}"`
+  - OptimizedApexChart: `:key="radial-${v.id}-${v.data.series?.length || 0}"`
+- 改進錯誤處理和日誌記錄
+
+修改檔案：
+✅ src/components/utilities/chartjs.vue - 數據驗證和錯誤處理
+✅ src/components/utilities/DoughnutChart.vue - 數據驗證
+✅ src/view/oco/home/index.js - 數據更新邏輯
+✅ src/view/oco/home/Home.vue - 組件 Key 設定
+
+測試驗證：
+✅ 圓餅圖穩定顯示，不會消失
+✅ 趨勢圖穩定顯示，不會消失
+✅ 數據更新時圖表平滑更新，無閃爍
+✅ 避免無效數據導致的圖表崩潰
+
+22. **🔧 圓餅圖消失問題修正** ⭐⭐⭐⭐⭐
+問題：圓餅圖在一段時間後會自動消失
+原因：Canvas 元素在數據更新時被破壞，導致 `Cannot read properties of null (reading 'getContext')` 錯誤
+
+解決方案：
+- 增強 Canvas 元素檢查：在初始化圖表前檢查 `getContext` 方法是否存在
+- 改進圖表重新初始化邏輯：當 Canvas 無效時自動重新初始化圖表
+- 優化數據更新策略：當 API 回應無效時保持現有數據，避免圖表消失
+- 增強快取驗證：確保快取數據包含有效的圖表數據
+- 改進錯誤處理：添加 try-catch 和詳細的錯誤日誌
+
+修改檔案：
+✅ src/components/utilities/chartjs.vue - Canvas 檢查和重新初始化
+✅ src/view/oco/home/index.js - 數據更新策略和快取驗證
+✅ src/components/utilities/DoughnutChart.vue - 數據驗證改進
+
+測試驗證：
+✅ 圓餅圖不再消失，穩定顯示
+✅ Canvas 錯誤得到妥善處理
+✅ 數據更新時圖表平滑更新
+✅ 無效數據時保持現有圖表顯示
+
+23. **🔧 Email 格式驗證修正** ⭐⭐⭐⭐⭐
+問題：新增群組中選擇 EMAIL 發送方式時，仍然檢查手機號碼格式而不是 Email 格式
+原因：submitForm 函數中的驗證邏輯沒有根據發送方式進行區分
+
+解決方案：
+- 修改 src/view/oco/notify/group/main.js 中的 submitForm 函數
+- 根據 formState.type 判斷發送方式：
+  - type === 3 (EMAIL)：使用 Email 格式驗證 `/^[^\s@]+@[^\s@]+\.[^\s@]+$/`
+  - 其他 (簡訊、語音)：使用手機號碼格式驗證 `/^09[0-9]{8}$/`
+- 錯誤訊息也相應調整為 "Email 格式錯誤" 或 "手機格式錯誤"
+
+修改檔案：
+✅ src/view/oco/notify/group/main.js - submitForm 函數驗證邏輯
+
+驗證邏輯：
+```javascript
+// 根據發送方式檢查不同格式
+if (formState.type === 3) {
+  // EMAIL 格式檢查
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(formState.values[i].value)) {
+    errMsg = `${formState.values[i].name} Email 格式錯誤`;
+    break;
+  }
+} else {
+  // 手機號碼格式檢查 (簡訊和語音)
+  const phoneRegex = /^09[0-9]{8}$/;
+  if (!phoneRegex.test(formState.values[i].value)) {
+    errMsg = `${formState.values[i].name} 手機格式錯誤`;
+    break;
+  }
+}
+```
+
+測試驗證：
+✅ EMAIL 發送方式：檢查 Email 格式 (user@domain.com)
+✅ 簡訊發送方式：檢查手機號碼格式 (09xxxxxxxx)
+✅ 語音發送方式：檢查手機號碼格式 (09xxxxxxxx)
+✅ 錯誤訊息正確顯示對應的格式錯誤提示
+
+===============================================
+主要修正項目 (v2.2.14 關鍵設定保護確認版)
+===============================================
+
+17. **🔧 關鍵設定保護確認** ⭐⭐⭐⭐⭐
+問題：確保發布後不再包含硬編碼的 IP 地址，使用相對路徑適應不同部署環境
+原因：需要確認所有關鍵設定都正確保護，避免發布後出現連接問題
+
+解決方案：
+- 確認 dataService.js 中的 baseURL 使用空字串 ""，確保使用相對路徑
+- 確認 SignalR 連接檔案使用相對路徑（/api/AlarmSummary, /api/Cctv, /api/PageTag）
+- 確認開發環境代理設定不會影響生產環境編譯
+- 確保發布後不再包含硬編碼的 IP 地址
+- 確保發布後能適應不同部署環境
+
+保護的關鍵檔案：
+✅ src/config/dataService/dataService.js - baseURL: ""
+✅ src/composable/alarmConnection.js - signalRUrl = "/api/AlarmSummary"
+✅ src/composable/cctvConnection.js - signalRUrl = "/api/Cctv"
+✅ src/composable/tagSignalConnection.js - 條件判斷邏輯
+
+安全確認：
+✅ 使用相對路徑，適應不同部署環境
+✅ 不再包含硬編碼的 IP 地址
+✅ 開發環境和生產環境都能正常運作
+✅ 編譯後不會包含環境變數中的 IP 地址
+
+編譯資訊：
+- 編譯時間：2025-07-29 18:37:28
+- 編譯雜湊：55b4d586e5c99ef6
+- 編譯耗時：28570ms (28.6秒)
+
+===============================================
+歷史修正項目 (v2.2.0 圖表優化版)
+===============================================
+
+6. 【圖表平滑更新優化】⭐⭐⭐⭐⭐
+   問題：首頁圖表每次更新都像重整網頁，有明顯閃爍和重新載入感
+   原因：Chart.js 組件每次資料變化都重新創建 Chart 實例，且資料處理函數產生不穩定結果
+   解決方案：
+   - 重構 Chart.js 組件 (src/components/utilities/chartjs.vue)
+     * 移除 watchEffect 中的重複創建邏輯
+     * 只在組件初始化時創建一次 Chart 實例
+     * 使用 watch 監聽資料變化並調用 update('none') 平滑更新
+     * 添加資料雜湊比較，避免不必要的更新
+   - 創建優化的 ApexChart 組件 (src/components/utilities/optimized-apexchart.vue)
+     * 針對 RadialBar 圖表的平滑更新
+     * 使用 updateSeries() 和 updateOptions() 方法
+     * 避免重新創建 ApexCharts 實例
+   - 優化首頁更新策略 (src/view/oco/home/index.js)
+     * 添加資料快取機制，減少重複 API 調用
+     * 使用 debounce 防抖，避免頻繁更新
+     * 實施智能資料比較邏輯
+     * 修正資料處理函數的穩定性問題：
+       - fetchPieChart: 快取顏色生成結果，確保數字類型一致
+       - fetchLineChart: 移除 useChartDataTransform，使用穩定的顏色生成
+       - fetchBarChart: 使用穩定的顏色配置，避免重複計算
+     * 解決 useColorGenerator 和 useNumformatter 產生不穩定結果的問題
+
+   - 圓餅圖終極優化 (v2.2.2 新增)
+     * 修正 DoughnutChart 組件中動態計算導致的重繪問題
+     * 使用 computed 屬性避免 reduce 重複計算
+     * 移除響應式主題顏色，使用固定邊框顏色
+     * 關閉 Chart.js 動畫，避免不必要的重繪
+     * 穩定化點擊處理函數，避免每次重新創建
+     * 優化資料雜湊計算，包含更多影響圖表的屬性
+
+7. 【趨勢圖響應式高度優化】⭐⭐⭐⭐
+   問題：首頁趨勢圖元件高度變高時，圖表本身不會等比例變高
+   原因：容器高度設定不當，圖表高度沒有正確響應容器變化
+   解決方案：
+   - 修正容器高度設定 (src/view/oco/home/index.js)
+     * getChartStyle: 設定實際 height 而非 minHeight
+     * 新增 getChartHeight: 計算圖表實際可用高度
+     * 減去標題和間距高度，確保圖表完全填滿容器
+   - 優化 HTML 結構 (src/view/oco/home/Home.vue)
+     * 使用 getChartHeight 動態設定圖表高度
+     * 改善容器 CSS 類別結構
+   - 新增響應式 CSS 樣式
+     * 使用 Flexbox 佈局確保正確的高度分配
+     * 設定 min-height: 0 讓 flex 子元素能正確縮放
+     * 確保圖表容器能響應父容器高度變化
+
+   - 趨勢圖真正響應式修正 (v2.2.4 新增)
+     * 修正 Chart.js 組件的 maintainAspectRatio 邏輯
+     * 預設設定為 false，允許圖表響應高度變化
+     * 新增 canvasStyle computed 屬性，確保 Canvas 高度正確響應
+     * 修正模板中的 style 綁定問題
+     * 導入 computed 函數，支援響應式樣式計算
+
+8. 【圖形繪製工具拖曳修正】⭐⭐⭐⭐
+   問題：編輯模式下圖形繪製工具箱不能拖曳移動
+   原因：CSS pointer-events 設定問題，缺少拖曳相關樣式
+   解決方案：
+   - 修正工具箱拖曳樣式 (src/components/oco/gui/picture/Index.vue)
+     * 為 drag-panel 添加 pointer-events: auto 和 cursor: move
+     * 為 settingbox 和 symbolbox 添加相同的拖曳樣式
+     * 確保拖曳區域有正確的視覺回饋
+   - 添加拖曳調試功能 (src/composable/gui/toolbox.js)
+     * 在 startDrag 和 handleDrag 函數中添加 console.log
+     * 添加元素存在性檢查，避免空指針錯誤
+     * 提供詳細的拖曳狀態信息
+
+   - 圖形繪製工具拖曳完全修正 (v2.2.6 新增)
+     * 根本問題：HTML5 drag API 的 clientX/clientY 座標問題
+     * 解決方案：改用 mousedown/mousemove/mouseup 事件實現拖曳
+     * 修正拖曳邏輯 (src/composable/gui/toolbox.js)
+       - 使用 mousedown 開始拖曳，記錄初始位置
+       - 使用 mousemove 處理拖曳移動，實時更新位置
+       - 使用 mouseup 結束拖曳，清理事件監聽
+       - 添加全域事件監聽，確保拖曳在整個頁面範圍內有效
+     * 修正 HTML 模板 (src/components/oco/gui/picture/Index.vue)
+       - 移除 draggable="true" 和 @dragstart/@drag 事件
+       - 改用 @mousedown 事件觸發拖曳
+       - 添加 user-select: none 防止文字選取干擾
+
+   影響的圖表類型：
+   ✅ Line Chart (線圖) - Chart.js 優化
+   ✅ Doughnut Chart (圓餅圖) - Chart.js 優化
+   ✅ Bar Chart (條形圖) - Chart.js 優化
+   ✅ RadialBar Chart (徑向條形圖) - ApexCharts 優化
+   ✅ Card (卡片文字) - 已有 vue3-autocounter 動畫
+
+   預期效果：
+   - 消除圖表更新時的閃爍現象
+   - 實現平滑的 RWG (Real-time Web Graphics) 效果
+   - 保持圖表互動狀態（縮放、選擇等）
+   - 減少 CPU 使用率和記憶體消耗
+   - 改善整體用戶體驗
+
+7. 【依賴管理優化】
+   - 新增 lodash-es 依賴，提供 debounce 功能
+   - 修正 ApexCharts 導入方式，避免編譯錯誤
+   - 使用 --legacy-peer-deps 解決依賴衝突
+
+===============================================
+歷史修正項目 (v2.1.3)
+===============================================
+
+1. 【圖示顯示修正】
+   問題：首頁儀表板中多個圖示顯示為空白
+   原因：vue-unicons 圖示名稱錯誤或不存在
+   修正：
+   - arrows-alt → expand-arrows (拖曳排序按鈕)
+   - expand → expand-arrows (展開按鈕)
+   - trash → trash-alt (刪除按鈕)
+   - setting → cog (設定按鈕)
+   - maximize → corner-up-right (調整大小按鈕)
+   影響檔案：src/view/oco/home/Home.vue
+
+2. 【編輯模式開關功能】
+   問題：編輯按鈕與設定/刪除按鈕重疊，介面混亂
+   解決方案：新增編輯模式開關控制編輯按鈕顯示
+   功能：
+   - 新增編輯模式開關 (位於「新增圖表」按鈕旁)
+   - 控制三個編輯按鈕的顯示/隱藏：
+     * 拖曳排序按鈕 (expand-arrows)
+     * 調整大小按鈕 (corner-up-right)
+     * 恢復預設大小按鈕 (refresh)
+   - 預設狀態：編輯模式關閉
+   - 避免按鈕重疊，提供清晰的編輯/檢視模式切換
+   影響檔案：
+   - src/view/oco/home/Home.vue
+   - src/view/oco/home/index.js
+
+3. 【用戶名稱顯示修正】
+   問題：第一次登入顯示預設用戶名，登出再登入後才顯示正確名稱
+   原因：組件靜態讀取 localStorage，不響應後續變化
+   修正：
+   - 將靜態讀取改為響應式 ref 和 computed
+   - 新增 updateStaffName() 函數動態更新用戶名稱
+   - 監聽 storage 事件，localStorage 變化時自動更新
+   - 登入成功後手動觸發 storage 事件通知
+   - 組件生命週期管理，避免記憶體洩漏
+   影響檔案：
+   - src/components/utilities/auth-info/info.vue
+   - src/vuex/modules/auth/actionCreator.js
+
+4. 【SignalR 連接修正】
+   問題：CCTV 和 Alarm 的 SignalR WebSocket 連接失敗
+   原因：前端端口與後端 CORS 設定不匹配
+   修正：
+   - 前端開發端口從 8999 改為 8080
+   - 更新環境變數 VUE_APP_FRONTEND_URL
+   - 修正 nginx CORS 設定匹配新端口
+   - 統一 AlarmSummary 和 Cctv 使用 /api 路徑
+   影響檔案：
+   - customize-vue-config.js
+   - .env
+   - nginx.conf
+   - src/composable/alarmConnection.js
+
+5. 【圖示服務代理修正】
+   問題：生產環境中圖示無法載入
+   原因：nginx 缺少 /imgApi/ 代理設定
+   修正：
+   - 新增 nginx /imgApi/ 代理設定
+   - 代理到圖示服務器 (http://192.168.1.152:7654/)
+   - 確保生產環境圖示正確載入
+   影響檔案：nginx.conf
+
+===============================================
+技術細節
+===============================================
+
+前端設定：
+- 開發端口：8080 (原 8999)
+- 生產端口：8345 (nginx 代理)
+- API 端點：http://192.168.1.152:8345/
+- 圖示服務：http://192.168.1.152:7654/
+
+後端相容性：
+- CORS 設定：http://localhost:8080
+- SignalR Hub：/AlarmSummary, /Cctv
+- API 路徑：/api/*
+
+===============================================
+測試驗證
+===============================================
+
+✅ 圖示顯示：所有按鈕圖示正確顯示
+✅ 編輯模式：開關正常控制編輯按鈕顯示/隱藏
+✅ 用戶名稱：登入後立即顯示正確用戶名稱
+✅ SignalR：CCTV 和 Alarm 連接正常 (需後端支援)
+✅ 圖示載入：生產環境圖示正確載入
+✅ 選擇對話框：所有選擇測點對話框寬度適中，支援調整大小
+✅ 編譯成功：無錯誤，所有功能正常
+
+===============================================
+部署說明
+===============================================
+
+1. 前端編譯：npm run build
+2. 部署 dist 目錄到生產環境
+3. 確認 nginx 服務重新啟動
+4. 驗證所有功能正常運作
+
+===============================================
+📋 **版本 v2.2.7 通知群組 EMAIL 功能新增**
+===============================================
+
+### **🎯 主要功能更新**
+
+11. **📝 版本修改紀錄文字優化** ⭐⭐
+問題：EMAIL 功能新增記錄文字過於詳細冗長
+解決方案：將詳細描述縮短為精簡版本，保留重要資訊但更易閱讀
+影響：提升版本修改紀錄的可讀性和維護性
+
+10. **📧 通知群組 EMAIL 功能新增** ⭐⭐⭐⭐⭐
+問題：選擇 EMAIL 發送方式時無法添加人員列表
+原因：後端 EMAIL 選項被註解，前端 ID 對應錯誤
+
+解決方案：
+- 修正 ID 對應：Line(2)不顯示，Email(3)顯示Email列表，簡訊(1)和語音(5)顯示手機列表
+- 前端手動添加 EMAIL 選項到 typeOptions
+- 修正顯示條件：`formState.type === 1 || formState.type === 3 || formState.type === 5`
+- 修正標籤：Email 時顯示 "Email列表:" 和 "Email" 欄位
+
+影響檔案：
+✅ src/view/oco/notify/group/Index.vue - 修正顯示條件和標籤
+✅ src/view/oco/notify/group/main.js - 添加 EMAIL 選項和欄位標籤
+
+測試驗證：
+✅ Line 不顯示人員列表，Email 顯示 Email 列表，簡訊和語音顯示手機列表
+
+===============================================
+📋 **版本 v2.2.6 功能總覽**
+===============================================
+
+### **🎯 主要功能更新**
+
+1. **📊 圖表系統全面優化** ⭐⭐⭐⭐⭐
+   - 趨勢圖響應式設計完全修正
+   - 圖表容器自適應佈局
+   - 支援動態調整圖表尺寸
+   - 優化圖表渲染性能
+
+2. **🎨 圖形繪製工具拖曳修正** ⭐⭐⭐⭐
+   - 完全解決工具箱無法拖曳問題
+   - 採用原生滑鼠事件替代 HTML5 drag API
+   - 實現精確的拖曳定位和邊界限制
+   - 提供流暢的用戶交互體驗
+
+3. **🔧 系統穩定性提升** ⭐⭐⭐
+   - 修正多項 ESLint 警告
+   - 優化代碼結構和性能
+   - 提升編譯效率
+
+### **🛠️ 技術改進**
+
+- **響應式設計**：圖表組件完全支援響應式佈局
+- **事件處理優化**：改進拖曳事件處理機制
+- **代碼品質**：清理調試代碼，提升代碼整潔度
+- **用戶體驗**：增強交互反饋和視覺提示
+
+### **📈 性能指標**
+
+- **編譯時間**：約 100 秒 (優化後)
+- **代碼體積**：維持穩定，無顯著增長
+- **功能完整性**：100% 向下兼容
+- **用戶體驗**：顯著提升拖曳和圖表操作體驗
+
+### **🎉 用戶價值**
+
+- **設計師**：圖形工具箱可自由拖曳，提升設計效率
+- **數據分析師**：趨勢圖響應式顯示，支援多設備查看
+- **系統管理員**：更穩定的系統運行，減少操作問題
+- **開發團隊**：更乾淨的代碼結構，便於維護和擴展
+
+### **✅ 測試驗證 (v2.2.6)**
+
+✅ **圖表響應式**：所有圖表類型完美適應容器尺寸變化
+✅ **工具箱拖曳**：圖形繪製工具箱流暢拖曳移動
+✅ **邊界限制**：拖曳範圍正確限制在畫布區域內
+✅ **視覺回饋**：滑鼠懸停顯示正確的移動游標
+✅ **編譯成功**：無錯誤，所有功能正常運作
+✅ **性能優化**：圖表更新更流暢，減少閃爍現象
+
+### **🚀 部署建議 (v2.2.6)**
+
+1. **前端編譯**：`npm run build`
+2. **部署檔案**：將 dist 目錄部署到生產環境
+3. **清除快取**：建議清除瀏覽器快取以載入新版本
+4. **功能測試**：
+   - 測試圖表響應式調整
+   - 測試圖形工具箱拖曳功能
+   - 驗證所有編輯模式功能正常
+
+===============================================
+15. 版本 v2.2.12 修正 API 路徑重複問題 (2025-01-27)
+    修正內容：
+    - 修正 dataService.js 中的 baseURL 設定，從 "/api" 改為空字串 ""
+    - 解決 API 請求路徑重複問題（如 /api/api/System/...）
+    - 確保各個 API 調用使用正確的完整路徑
+    - 維持開發時代理轉發和生產時 Web 伺服器代理的正常運作
+
+    編譯資訊：
+    - 編譯時間：2025-07-29 18:26:37
+    - 編譯雜湊：b257fc32c9bd576e
+    - 編譯耗時：9443ms
+
+16. 版本 v2.2.13 修正開發環境代理設定 (2025-01-27)
+    修正內容：
+    - 修正 customize-vue-config.js 中的 /api 代理設定
+    - 移除 pathRewrite 設定，避免 API 路徑被錯誤重寫
+    - 解決開發環境中 API 請求返回 HTML 而不是 JSON 的問題
+    - 確保開發環境中 SignalR WebSocket 連接正常運作
+    - 修正開發環境中登入失敗的問題
+
+    影響檔案：
+    ✅ customize-vue-config.js - 修正 /api 代理設定
+
+    測試驗證：
+    ✅ 開發環境中 API 請求正常返回 JSON 資料
+    ✅ SignalR WebSocket 連接成功
+    ✅ 登入功能正常運作
+    ✅ 生產環境不受影響
+
+    編譯資訊：
+    - 編譯時間：2025-07-29 18:30:15
+    - 編譯雜湊：開發環境即時編譯
+    - 編譯耗時：即時編譯
+
+17. 版本 v2.2.14 關鍵設定保護確認 (2025-01-27)
+    確認內容：
+    - 確認 dataService.js 中的 baseURL 使用空字串 ""，確保使用相對路徑
+    - 確認 SignalR 連接檔案使用相對路徑（/api/AlarmSummary, /api/Cctv, /api/PageTag）
+    - 確認開發環境代理設定不會影響生產環境編譯
+    - 確保發布後不再包含硬編碼的 IP 地址
+    - 確保發布後能適應不同部署環境
+
+    保護的關鍵檔案：
+    ✅ src/config/dataService/dataService.js - baseURL: ""
+    ✅ src/composable/alarmConnection.js - signalRUrl = "/api/AlarmSummary"
+    ✅ src/composable/cctvConnection.js - signalRUrl = "/api/Cctv"
+    ✅ src/composable/tagSignalConnection.js - 條件判斷邏輯
+
+    安全確認：
+    ✅ 使用相對路徑，適應不同部署環境
+    ✅ 不再包含硬編碼的 IP 地址
+    ✅ 開發環境和生產環境都能正常運作
+    ✅ 編譯後不會包含環境變數中的 IP 地址
+
+    編譯資訊：
+    - 編譯時間：2025-07-29 18:35:00
+    - 編譯雜湊：確認使用相對路徑
+    - 編譯耗時：確認無硬編碼 IP

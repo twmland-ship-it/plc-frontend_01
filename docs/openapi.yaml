@@ -1,0 +1,823 @@
+openapi: 3.0.3
+info:
+  title: PLC Frontend API Documentation
+  version: 2.2.36
+  description: |
+    PLC 前端系統完整 API 文檔
+
+    本系統提供工業控制系統的前端介面，包含以下主要功能：
+    - 儀表板與即時監控
+    - 歷史資料查詢與報表
+    - 警報管理
+    - 設備與標籤管理
+    - 用戶權限管理
+    - 系統設定
+
+    ## 認證方式
+    系統使用 Session-based 認證，需要先登入取得 Session。
+
+    ## 錯誤處理
+    所有 API 回應都遵循統一格式：
+    - 成功：HTTP 200，包含 Detail 欄位
+    - 錯誤：HTTP 4xx/5xx，包含錯誤訊息
+
+    ## 電費計算功能
+    系統提供完整的電費計算功能，包含：
+    - 低壓非時間電價設定
+    - 夏月期間設定
+    - 電價實施年月設定
+    - 臨時用電倍數設定
+
+  contact:
+    name: OCO 技術支援
+    email: support@ococomtw.com
+  license:
+    name: Proprietary
+servers:
+  - url: /
+    description: 本地開發環境
+  - url: https://api.ococomtw.com
+    description: 正式環境
+components:
+  securitySchemes:
+    sessionAuth:
+      type: apiKey
+      in: cookie
+      name: JSESSIONID
+  schemas:
+    ApiResponse:
+      type: object
+      properties:
+        Detail:
+          type: object
+        Success:
+          type: boolean
+        Message:
+          type: string
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+        message:
+          type: string
+        code:
+          type: integer
+
+security:
+  - sessionAuth: []
+
+paths:
+  # 認證相關 API
+  /api/auth/login:
+    post:
+      tags:
+        - Authentication
+      summary: 用戶登入
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                  description: 用戶名稱
+                password:
+                  type: string
+                  description: 密碼
+              required:
+                - username
+                - password
+      responses:
+        '200':
+          description: 登入成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '401':
+          description: 認證失敗
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /api/auth/logout:
+    post:
+      tags:
+        - Authentication
+      summary: 用戶登出
+      responses:
+        '200':
+          description: 登出成功
+
+  # 系統設定 API
+  /api/System/GetFirstPageItemContent:
+    get:
+      tags:
+        - System
+      summary: 取得首頁儀表板配置與可選項
+      description: 獲取儀表板的配置選項，包含單位列表、統計方法、時間區間等
+      parameters:
+        - in: query
+          name: _t
+          schema:
+            type: integer
+          required: false
+          description: 防快取時間戳
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  Detail:
+                    type: object
+                    properties:
+                      UnitList:
+                        type: array
+                        description: 單位列表
+                        items:
+                          type: object
+                          properties:
+                            Id:
+                              type: string
+                            Name:
+                              type: string
+                      StatisticalMethodsList:
+                        type: array
+                        description: 統計方法列表
+                        items:
+                          type: object
+                          properties:
+                            Id:
+                              type: string
+                            Name:
+                              type: string
+                      DurationList:
+                        type: array
+                        description: 時間區間列表
+                        items:
+                          type: object
+                          properties:
+                            Id:
+                              type: string
+                            Name:
+                              type: string
+                      PageItemDetail:
+                        type: object
+                        description: 頁面項目詳細資訊
+                        properties:
+                          DataContentJson:
+                            type: string
+                            description: JSON 格式的資料內容
+  /api/System/ModifyFirstPage:
+    post:
+      tags:
+        - System
+      summary: 儲存首頁儀表板的配置
+      description: 儲存儀表板的配置，包含 Grid 位置與圖表設定
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                ContentJson:
+                  type: string
+                  description: JSON 格式的配置內容
+              required:
+                - ContentJson
+      responses:
+        '200':
+          description: 配置已儲存
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '400':
+          description: 請求格式錯誤
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  # 統計資料 API
+  /api/Statistic/GetRealTimeStaisticSummary:
+    post:
+      tags:
+        - Statistics
+      summary: 取得即時統計摘要
+      description: 根據標籤 ID 列表取得即時統計資料
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                TagIdList:
+                  type: array
+                  description: 標籤 ID 列表
+                  items:
+                    type: string
+              required:
+                - TagIdList
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  Detail:
+                    type: object
+                    properties:
+                      ValueList:
+                        type: array
+                        description: 統計值列表
+                        items:
+                          type: object
+                          properties:
+                            TagId:
+                              type: string
+                              description: 標籤 ID
+                            Value:
+                              type: number
+                              description: 統計值
+                            Unit:
+                              type: string
+                              description: 單位
+                            Timestamp:
+                              type: string
+                              format: date-time
+                              description: 時間戳
+  /api/history-report/tag-statistic-summaries/search/report-type:{reportType}:
+    post:
+      tags:
+        - History Reports
+      summary: 依報表類型查詢歷史統計
+      description: 根據報表類型、標籤 ID、統計方法和時間範圍查詢歷史統計資料
+      parameters:
+        - in: path
+          name: reportType
+          required: true
+          schema:
+            type: integer
+            enum: [1, 2, 3, 4]
+          description: |
+            報表類型：
+            - 1: 小時報表
+            - 2: 日報表
+            - 3: 月報表
+            - 4: 年報表
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                TagIds:
+                  type: array
+                  description: 標籤 ID 列表
+                  items:
+                    type: string
+                StatisticMethod:
+                  type: string
+                  description: 統計方法 (AVG, MAX, MIN, SUM)
+                  enum: [AVG, MAX, MIN, SUM]
+                From:
+                  type: string
+                  format: date
+                  description: 開始日期 (YYYY-MM-DD)
+                To:
+                  type: string
+                  format: date
+                  description: 結束日期 (YYYY-MM-DD)
+              required:
+                - TagIds
+                - StatisticMethod
+                - From
+                - To
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  Detail:
+                    type: array
+                    description: 歷史統計資料列表
+                    items:
+                      type: object
+                      properties:
+                        TagId:
+                          type: string
+                          description: 標籤 ID
+                        TagName:
+                          type: string
+                          description: 標籤名稱
+                        Values:
+                          type: array
+                          description: 時間序列資料
+                          items:
+                            type: object
+                            properties:
+                              Timestamp:
+                                type: string
+                                format: date-time
+                                description: 時間戳
+                              Value:
+                                type: number
+                                description: 統計值
+                              Unit:
+                                type: string
+                                description: 單位
+
+  # 標籤管理 API
+  /api/tags/list:
+    get:
+      tags:
+        - Tags
+      summary: 取得標籤列表
+      description: 獲取系統中所有標籤的列表
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+            default: 1
+          description: 頁碼
+        - in: query
+          name: size
+          schema:
+            type: integer
+            default: 20
+          description: 每頁筆數
+        - in: query
+          name: search
+          schema:
+            type: string
+          description: 搜尋關鍵字
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  Detail:
+                    type: object
+                    properties:
+                      Tags:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            Id:
+                              type: string
+                            Name:
+                              type: string
+                            Description:
+                              type: string
+                            Unit:
+                              type: string
+                            DeviceId:
+                              type: string
+                            GroupId:
+                              type: string
+                      TotalCount:
+                        type: integer
+                      PageCount:
+                        type: integer
+
+  # 警報管理 API
+  /api/alarms/realtime:
+    get:
+      tags:
+        - Alarms
+      summary: 取得即時警報
+      description: 獲取當前系統中的即時警報資訊
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  Detail:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        Id:
+                          type: string
+                        TagId:
+                          type: string
+                        TagName:
+                          type: string
+                        AlarmType:
+                          type: string
+                        Level:
+                          type: integer
+                        Message:
+                          type: string
+                        Timestamp:
+                          type: string
+                          format: date-time
+                        Status:
+                          type: string
+                          enum: [ACTIVE, ACKNOWLEDGED, CLEARED]
+
+  /api/alarms/history:
+    get:
+      tags:
+        - Alarms
+      summary: 取得歷史警報
+      description: 查詢歷史警報記錄
+      parameters:
+        - in: query
+          name: from
+          schema:
+            type: string
+            format: date
+          required: true
+          description: 開始日期
+        - in: query
+          name: to
+          schema:
+            type: string
+            format: date
+          required: true
+          description: 結束日期
+        - in: query
+          name: level
+          schema:
+            type: integer
+          description: 警報等級
+        - in: query
+          name: page
+          schema:
+            type: integer
+            default: 1
+          description: 頁碼
+        - in: query
+          name: size
+          schema:
+            type: integer
+            default: 20
+          description: 每頁筆數
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  Detail:
+                    type: object
+                    properties:
+                      Alarms:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            Id:
+                              type: string
+                            TagId:
+                              type: string
+                            TagName:
+                              type: string
+                            AlarmType:
+                              type: string
+                            Level:
+                              type: integer
+                            Message:
+                              type: string
+                            StartTime:
+                              type: string
+                              format: date-time
+                            EndTime:
+                              type: string
+                              format: date-time
+                            Duration:
+                              type: integer
+                              description: 持續時間（秒）
+                      TotalCount:
+                        type: integer
+                      PageCount:
+                        type: integer
+
+  # 用戶管理 API
+  /api/users/list:
+    get:
+      tags:
+        - Users
+      summary: 取得用戶列表
+      description: 獲取系統用戶列表（需要管理員權限）
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  Detail:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        Id:
+                          type: string
+                        Username:
+                          type: string
+                        Email:
+                          type: string
+                        Role:
+                          type: string
+                        IsActive:
+                          type: boolean
+                        CreatedAt:
+                          type: string
+                          format: date-time
+                        LastLoginAt:
+                          type: string
+                          format: date-time
+
+  /api/users/permissions:
+    get:
+      tags:
+        - Users
+      summary: 取得當前用戶權限
+      description: 獲取當前登入用戶的權限資訊
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  Detail:
+                    type: object
+                    properties:
+                      UserId:
+                        type: string
+                      Username:
+                        type: string
+                      Role:
+                        type: string
+                      Permissions:
+                        type: array
+                        items:
+                          type: string
+                      MenuAccess:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            MenuId:
+                              type: string
+                            MenuName:
+                              type: string
+                            HasAccess:
+                              type: boolean
+
+  # 可靠度分析 API
+  /api/ReliabilityAnalysis/GetReliabilityAnalysList:
+    get:
+      tags:
+        - 可靠度分析
+      summary: 獲取可靠度分析列表
+      description: 獲取所有設備的可靠度分析數據，包含故障次數、運轉次數和可靠度計算結果
+      security:
+        - sessionAuth: []
+      responses:
+        '200':
+          description: 成功獲取可靠度分析列表
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReliabilityAnalysisResponse'
+        '401':
+          description: 未授權
+        '403':
+          description: 權限不足
+        '500':
+          description: 伺服器錯誤
+
+  /api/System/ResetOperationgHour:
+    post:
+      tags:
+        - 可靠度分析
+      summary: 重置設備運轉時間
+      description: 重置指定設備的運轉時間計數器
+      security:
+        - sessionAuth: []
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ResetOperatingHourRequest'
+      responses:
+        '200':
+          description: 成功重置設備運轉時間
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResetOperatingHourResponse'
+        '400':
+          description: 請求參數錯誤
+        '401':
+          description: 未授權
+        '403':
+          description: 權限不足
+        '500':
+          description: 伺服器錯誤
+
+    ElectricityRateSettings:
+      type: object
+      description: 電價設定資料結構
+      properties:
+        summerPeriod:
+          type: object
+          description: 夏月期間設定
+          properties:
+            startMonth:
+              type: integer
+              minimum: 1
+              maximum: 12
+              description: 夏月開始月份
+            startDay:
+              type: integer
+              minimum: 1
+              maximum: 31
+              description: 夏月開始日期
+            endMonth:
+              type: integer
+              minimum: 1
+              maximum: 12
+              description: 夏月結束月份
+            endDay:
+              type: integer
+              minimum: 1
+              maximum: 31
+              description: 夏月結束日期
+        electricityRateImplementation:
+          type: object
+          description: 電價實施設定
+          properties:
+            year:
+              type: integer
+              minimum: 2020
+              maximum: 2100
+              description: 電價實施年份
+            month:
+              type: integer
+              minimum: 1
+              maximum: 12
+              description: 電價實施月份
+            temporaryMultiplier:
+              type: number
+              minimum: 1
+              description: 臨時用電倍數 (非臨時用電為1，臨時電依規定為大於1的小數)
+        rateData:
+          type: object
+          description: 電價費率資料
+          properties:
+            basicFee:
+              type: object
+              description: 基本電費
+              properties:
+                deviceContract:
+                  type: object
+                  properties:
+                    summer:
+                      type: number
+                      description: 夏月費率
+                    nonSummer:
+                      type: number
+                      description: 非夏月費率
+                demandContract:
+                  type: object
+                  properties:
+                    regular:
+                      type: object
+                      properties:
+                        summer:
+                          type: number
+                        nonSummer:
+                          type: number
+                    nonSummer:
+                      type: object
+                      properties:
+                        summer:
+                          type: number
+                        nonSummer:
+                          type: number
+            mobileFee:
+              type: object
+              description: 流動電費
+              properties:
+                summer:
+                  type: number
+                  description: 夏月每度費率
+                nonSummer:
+                  type: number
+                  description: 非夏月每度費率
+
+    ReliabilityAnalysisResponse:
+      type: object
+      description: 可靠度分析回應資料結構
+      properties:
+        Message:
+          type: string
+          description: 回應訊息
+        ReturnCode:
+          type: integer
+          description: 回應代碼 (1=成功, 其他=失敗)
+        Detail:
+          type: object
+          properties:
+            FormulaText:
+              type: string
+              description: 可靠度計算公式
+              example: "可靠度 = ((1 - (故障次數 / (運轉次數+ 故障次數))) * 100) %"
+            ReliabilityAnalysList:
+              type: array
+              description: 可靠度分析列表
+              items:
+                $ref: '#/components/schemas/ReliabilityAnalysisItem'
+
+    ReliabilityAnalysisItem:
+      type: object
+      description: 可靠度分析項目
+      properties:
+        ErrTagId:
+          type: string
+          description: 錯誤標籤ID
+        StateTagId:
+          type: string
+          description: 狀態標籤ID
+        SystemName:
+          type: string
+          description: 系統名稱
+        Description:
+          type: string
+          description: 設備描述
+        ErrorCount:
+          type: integer
+          description: 故障次數
+        StatusCount:
+          type: integer
+          description: 運轉次數
+        Reliability:
+          type: number
+          format: float
+          description: 可靠度百分比
+        ResetTime:
+          type: string
+          format: date-time
+          description: 重置時間
+          nullable: true
+        OriginalResult:
+          type: object
+          description: 原始計算結果
+          nullable: true
+
+    ResetOperatingHourRequest:
+      type: object
+      description: 重置設備運轉時間請求
+      required:
+        - TagId
+      properties:
+        TagId:
+          type: string
+          description: 設備狀態點ID
+
+    ResetOperatingHourResponse:
+      type: object
+      description: 重置設備運轉時間回應
+      properties:
+        Message:
+          type: string
+          description: 回應訊息
+        ReturnCode:
+          type: integer
+          description: 回應代碼 (1=成功, 其他=失敗)
+
+

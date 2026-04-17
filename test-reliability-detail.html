@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>可靠度分析明細測試</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .test-section {
+            margin-bottom: 30px;
+            padding: 15px;
+            border: 1px solid #d9d9d9;
+            border-radius: 6px;
+        }
+        .test-title {
+            color: #1890ff;
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .test-result {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+        }
+        .success {
+            background-color: #f6ffed;
+            border: 1px solid #b7eb8f;
+            color: #52c41a;
+        }
+        .error {
+            background-color: #fff2f0;
+            border: 1px solid #ffccc7;
+            color: #ff4d4f;
+        }
+        .warning {
+            background-color: #fffbe6;
+            border: 1px solid #ffe58f;
+            color: #faad14;
+        }
+        .info {
+            background-color: #e6f7ff;
+            border: 1px solid #91d5ff;
+            color: #1890ff;
+        }
+        button {
+            background: #1890ff;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background: #40a9ff;
+        }
+        button:disabled {
+            background: #d9d9d9;
+            cursor: not-allowed;
+        }
+        .code-block {
+            background: #f6f8fa;
+            border: 1px solid #e1e4e8;
+            border-radius: 6px;
+            padding: 16px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            overflow-x: auto;
+            margin: 10px 0;
+        }
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 10px 0;
+        }
+        .table th, .table td {
+            border: 1px solid #d9d9d9;
+            padding: 8px 12px;
+            text-align: left;
+        }
+        .table th {
+            background-color: #fafafa;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔍 可靠度分析明細功能測試</h1>
+        <p>此頁面用於測試可靠度分析明細按鈕的功能和診斷問題。</p>
+    </div>
+
+    <div class="container">
+        <div class="test-section">
+            <div class="test-title">📋 問題診斷清單</div>
+            
+            <h3>1. 明細按鈕顯示條件檢查</h3>
+            <div class="code-block">
+v-if="permission.read && record.OriginalResult !== null"
+            </div>
+            
+            <div class="test-result info">
+                <strong>檢查項目：</strong>
+                <ul>
+                    <li>✅ 用戶是否有 <code>alarm-reliability-analysis</code> 讀取權限</li>
+                    <li>✅ 記錄的 <code>OriginalResult</code> 是否不為 null</li>
+                    <li>✅ 明細按鈕是否正確顯示</li>
+                </ul>
+            </div>
+
+            <h3>2. 點擊事件檢查</h3>
+            <div class="code-block">
+@click="showDetail(record)"
+            </div>
+            
+            <div class="test-result info">
+                <strong>檢查項目：</strong>
+                <ul>
+                    <li>✅ showDetail 函數是否正確綁定</li>
+                    <li>✅ 點擊時是否有控制台輸出</li>
+                    <li>✅ Modal 狀態是否正確更新</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="test-section">
+            <div class="test-title">🛠️ 調試步驟</div>
+            
+            <h3>步驟 1: 檢查瀏覽器控制台</h3>
+            <div class="test-result warning">
+                <strong>操作：</strong>
+                <ol>
+                    <li>打開瀏覽器開發者工具 (F12)</li>
+                    <li>切換到 Console 標籤</li>
+                    <li>進入可靠度分析頁面</li>
+                    <li>點擊明細按鈕</li>
+                    <li>查看是否有以下輸出：</li>
+                </ol>
+                <div class="code-block">
+明細按鈕被點擊 {record object}
+權限狀態: {permission object}
+OriginalResult: {data or null}
+Modal 狀態已設置為: true
+                </div>
+            </div>
+
+            <h3>步驟 2: 檢查權限狀態</h3>
+            <div class="test-result warning">
+                <strong>在控制台執行：</strong>
+                <div class="code-block">
+// 檢查當前用戶權限
+console.log('用戶權限:', localStorage.getItem('permission'));
+
+// 檢查可靠度分析權限
+const permissions = JSON.parse(localStorage.getItem('permission') || '{}');
+console.log('可靠度分析權限:', permissions['alarm-reliability-analysis']);
+                </div>
+            </div>
+
+            <h3>步驟 3: 檢查數據結構</h3>
+            <div class="test-result warning">
+                <strong>在控制台執行：</strong>
+                <div class="code-block">
+// 檢查可靠度分析數據
+const store = window.__VUE_DEVTOOLS_GLOBAL_HOOK__.apps[0].config.globalProperties.$store;
+console.log('可靠度分析數據:', store.state.alarm.reliabilityAnalysisData);
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="test-section">
+            <div class="test-title">🔧 常見問題解決方案</div>
+            
+            <h3>問題 1: 明細按鈕不顯示</h3>
+            <div class="test-result error">
+                <strong>可能原因：</strong>
+                <ul>
+                    <li>用戶沒有讀取權限</li>
+                    <li>OriginalResult 為 null</li>
+                </ul>
+                <strong>解決方案：</strong>
+                <ul>
+                    <li>檢查用戶權限設置</li>
+                    <li>確認後端 API 返回完整數據</li>
+                </ul>
+            </div>
+
+            <h3>問題 2: 明細按鈕顯示但點擊無反應</h3>
+            <div class="test-result error">
+                <strong>可能原因：</strong>
+                <ul>
+                    <li>showDetail 函數未正確綁定</li>
+                    <li>事件冒泡被阻止</li>
+                    <li>Modal 組件問題</li>
+                </ul>
+                <strong>解決方案：</strong>
+                <ul>
+                    <li>檢查控制台是否有錯誤</li>
+                    <li>確認 showDetail 函數在 return 中正確導出</li>
+                    <li>檢查 DetailModal 組件是否正確導入</li>
+                </ul>
+            </div>
+
+            <h3>問題 3: Modal 不顯示</h3>
+            <div class="test-result error">
+                <strong>可能原因：</strong>
+                <ul>
+                    <li>detailModal 狀態未正確更新</li>
+                    <li>DetailModal 組件問題</li>
+                    <li>CSS 樣式問題</li>
+                </ul>
+                <strong>解決方案：</strong>
+                <ul>
+                    <li>檢查 detailModal.value 是否為 true</li>
+                    <li>確認 DetailModal 組件正確渲染</li>
+                    <li>檢查 z-index 等樣式問題</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="test-section">
+            <div class="test-title">📞 需要幫助？</div>
+            <div class="test-result info">
+                <p>如果按照上述步驟仍無法解決問題，請提供以下信息：</p>
+                <ul>
+                    <li>瀏覽器控制台的完整輸出</li>
+                    <li>用戶權限信息</li>
+                    <li>可靠度分析數據結構</li>
+                    <li>是否有 JavaScript 錯誤</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        console.log('🔍 可靠度分析明細測試頁面已載入');
+        console.log('請按照頁面上的步驟進行診斷');
+        
+        // 提供一些便利的調試函數
+        window.debugReliability = {
+            checkPermissions: function() {
+                const permissions = JSON.parse(localStorage.getItem('permission') || '{}');
+                console.log('所有權限:', permissions);
+                console.log('可靠度分析權限:', permissions['alarm-reliability-analysis']);
+                return permissions['alarm-reliability-analysis'];
+            },
+            
+            checkUserData: function() {
+                const userData = JSON.parse(localStorage.getItem('userData') || '{}');
+                console.log('用戶數據:', userData);
+                return userData;
+            },
+            
+            simulateClick: function() {
+                console.log('模擬明細按鈕點擊...');
+                // 這裡可以添加模擬點擊的代碼
+            }
+        };
+        
+        console.log('調試函數已載入，可使用：');
+        console.log('- debugReliability.checkPermissions()');
+        console.log('- debugReliability.checkUserData()');
+        console.log('- debugReliability.simulateClick()');
+    </script>
+</body>
+</html>

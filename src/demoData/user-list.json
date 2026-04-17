@@ -1,0 +1,44 @@
+{
+  "data": [
+    {
+      "id": "1",
+      "name": "人員1",
+      "permission": {
+        "id": "1",
+        "name": "管理員"
+      }
+    },
+    {
+      "id": "2",
+      "name": "人員2",
+      "permission": {
+        "id": "2",
+        "name": "主管"
+      }
+    },
+    {
+      "id": "3",
+      "name": "人員3",
+      "permission": {
+        "id": "3",
+        "name": "員工"
+      }
+    }
+  ],
+  "options": {
+    "permissions": [
+      {
+        "id": "1",
+        "name": "管理員"
+      },
+      {
+        "id": "2",
+        "name": "主管"
+      },
+      {
+        "id": "3",
+        "name": "員工"
+      }
+    ]
+  }
+}

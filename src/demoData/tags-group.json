@@ -1,0 +1,87 @@
+{
+  "data": [
+    {
+      "id": "1",
+      "name": "group1",
+      "regionid": ["1", "2", "3"],
+      "classid": ["1", "2", "3"],
+      "classname": "電錶",
+      "description": "test1",
+      "tags": [
+        {
+          "id": "1",
+          "name": "tag1"
+        },
+        {
+          "id": "2",
+          "name": "tag2"
+        }
+      ]
+    },
+    {
+      "id": "2",
+      "name": "group2",
+      "regionid": ["1", "2", "3"],
+      "classid": ["1", "2", "3"],
+      "classname": "消防",
+      "description": "test2",
+      "tags": [
+        {
+          "id": "1",
+          "name": "tag1"
+        },
+        {
+          "id": "2",
+          "name": "tag2"
+        }
+      ]
+    }
+  ],
+  "options": {
+    "tagClass": [
+      {
+        "id": "1",
+        "name": "進排風系統"
+      },
+      {
+        "id": "2",
+        "name": "照明系統"
+      },
+      {
+        "id": "3",
+        "name": "消防系統"
+      },
+      {
+        "id": "4",
+        "name": "其他"
+      }
+    ]
+  },
+
+  "tags": [
+    {
+      "id": 1,
+      "name": "tag1"
+    },
+    {
+      "id": 10,
+      "name": "tag10"
+    },
+    {
+      "id": 11,
+      "name": "tag11"
+    },
+    {
+      "id": 12,
+      "name": "tag12"
+    },
+    {
+      "id": 13,
+      "name": "tag13"
+    },
+    {
+      "id": 14,
+      "name": "tag14"
+    }
+  ]
+}

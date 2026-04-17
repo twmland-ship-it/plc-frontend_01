@@ -1,0 +1,259 @@
+openapi: 3.0.3
+info:
+  title: 電力卸載功能 API 規格（依文件）
+  version: "1.0.0"
+  description: |
+    僅涵蓋「電力卸載」功能且嚴格依貴方提供的《電力加卸載頁面及API》文件。
+    - 不擴充文件未載明之端點或欄位。
+    - Content-Type 依文件要求：多數為 multipart/form-data；設備值設定為 application/json。
+    - 新增/編輯/刪除卸載階段使用 ModifyMode：1=新增、3=編輯、4=刪除。
+servers:
+  - url: /
+    description: 相對於目前站台的 API 根路徑
+
+paths:
+  /api/ElectricPowerUnload/CreateElectricPowerUnloadSummary:
+    post:
+      tags: [ElectricPowerUnload]
+      summary: 新增卸載區域（基本資料）
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                Name:
+                  type: string
+                  description: 卸載區域名稱
+                ModeCode:
+                  type: integer
+                  description: 卸載模式代碼（由後端提供對照）
+              required: [Name, ModeCode]
+      responses:
+        '200':
+          description: 成功或失敗皆回傳信封格式
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseEnvelope'
+
+  /api/ElectricPowerUnload/EditElectricPowerUnloadSummary:
+    post:
+      tags: [ElectricPowerUnload]
+      summary: 編輯卸載區域（基本資料）
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                Id:
+                  type: string
+                  description: 要編輯的卸載區域 Id
+                Name:
+                  type: string
+                  description: 卸載區域名稱
+                ModeCode:
+                  type: integer
+                  description: 卸載模式代碼
+              required: [Id, Name, ModeCode]
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseEnvelope'
+
+  /api/ElectricPowerUnload/DeleteElectricPowerUnloadSummary:
+    post:
+      tags: [ElectricPowerUnload]
+      summary: 刪除卸載區域
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                Id:
+                  type: string
+                  description: 要刪除的卸載區域 Id
+              required: [Id]
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseEnvelope'
+
+  /api/ElectricPowerUnload/EditElectricPowerConsumableTagForUnload:
+    post:
+      tags: [ElectricPowerUnload]
+      summary: 編輯指定卸載區域用於計算即時需量的測點集合
+      description: 僅允許單位為 kW/mW 的測點 Id（依文件）。
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                SummaryId:
+                  type: string
+                  description: 卸載區域 Id
+                ElectricPowerConsumableTagIdList:
+                  type: array
+                  items:
+                    type: string
+                  description: 計算即時需量的測點 Id 集合（kW/mW）
+              required: [SummaryId, ElectricPowerConsumableTagIdList]
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseEnvelope'
+
+  /api/ElectricPowerUnload/EditElectricPowerUnloadStageGroup:
+    post:
+      tags: [ElectricPowerUnload]
+      summary: 新增/編輯/刪除 卸載階段（以 ModifyMode 區分）
+      description: |
+        ModifyMode 常數：1=新增、3=編輯、4=刪除（依文件）。
+        - 新增/編輯時通常需帶 StageCode(1|2|3)、StageName、UnloadULmt(kW)、LoadLLmt(kW)、UnloadAlarmTagId。
+        - 編輯/刪除時需帶目標階段 Id（文件出現「卸載階段Id」字樣；此處以 StageId 命名，實際欄位名以後端為準）。
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                ModifyMode:
+                  type: integer
+                  enum: [1, 3, 4]
+                  description: 1=新增、3=編輯、4=刪除
+                SummaryId:
+                  type: string
+                  description: 卸載區域 Id
+                StageId:
+                  type: string
+                  description: 卸載階段 Id（編輯=3、刪除=4 時必填）
+                StageCode:
+                  type: integer
+                  enum: [1, 2, 3]
+                  description: 卸載階段代碼（新增/編輯使用；編輯時 UI 需唯讀）
+                StageName:
+                  type: string
+                  description: 卸載階段名稱
+                UnloadULmt:
+                  type: number
+                  format: double
+                  description: 卸載需量（kW）。UI 顯示唯讀，由「契約容量×%」換算。
+                LoadLLmt:
+                  type: number
+                  format: double
+                  description: 回載門檻（kW）
+                UnloadAlarmTagId:
+                  type: string
+                  description: 警報虛擬點 Id
+              required: [ModifyMode, SummaryId]
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseEnvelope'
+
+  /api/ElectricPowerUnload/EditElectricPowerUnloadTag:
+    post:
+      tags: [ElectricPowerUnload]
+      summary: 編輯各卸載階段的卸載設備及其卸載/加載值
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EditElectricPowerUnloadTagRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseEnvelope'
+
+  /api/ElectricPowerUnload/GetElectricPowerUnloadStatusList:
+    get:
+      tags: [ElectricPowerUnload]
+      summary: 顯示卸載即時狀況（持續查詢）
+      responses:
+        '200':
+          description: 回傳格式依後端文件對應之 JSON；此處以通用信封表示。
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseEnvelope'
+
+  /api/ElectricPowerUnload/GetElectricPowerUnloadStageGroupDetailList:
+    get:
+      tags: [ElectricPowerUnload]
+      summary: 查詢目前卸載地區（含階段明細）
+      description: 回傳 Detail.SummaryDetailList；若為空集合表示尚未設定卸載區域。
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseEnvelope'
+
+components:
+  schemas:
+    ApiResponseEnvelope:
+      type: object
+      properties:
+        ReturnCode:
+          type: integer
+          description: 1 表成功，非 1 表失敗
+        Message:
+          type: string
+          description: 失敗時的錯誤訊息或提示
+        Detail:
+          description: 成功時的資料內容；結構依端點而異
+          oneOf:
+            - type: object
+            - type: array
+            - type: string
+            - nullable: true
+    EditElectricPowerUnloadTagRequest:
+      type: object
+      properties:
+        StageDetailId:
+          type: string
+          description: 卸載階段 ID（與 Tag 設定對應的 StageDetail）
+        SummaryId:
+          type: string
+          description: 卸載區域 ID
+        TagList:
+          type: array
+          items:
+            $ref: '#/components/schemas/TagWithValues'
+      required: [StageDetailId, SummaryId, TagList]
+    TagWithValues:
+      type: object
+      properties:
+        TagId:
+          type: string
+          description: 要卸載的測點 ID
+        UnloadValue:
+          type: string
+          description: 卸載時送出的值
+        LoadValue:
+          type: string
+          description: 回載時送出的值（通常為 UnloadValue 的反向值）
+        IntervalSecondsForLoad:
+          type: integer
+          description: 回載前等待秒數
+      required: [TagId, UnloadValue, LoadValue]
+

@@ -1,0 +1,217 @@
+{
+  "data": {
+    "Meters": [
+      {
+        "MeterId": "622383a2-9da6-4691-ad0f-ac75cbe79fcf",
+        "MeterName": "mdsd",
+        "RegionId": "adf03e81-b38c-4b20-94ff-5122bcf9e0c1",
+        "RegionName": "ttest",
+        "MeterUnit": "kwh",
+        "Data": [
+          {
+            "Date": "2024-03-22",
+            "FirstValue": 302,
+            "LastValue": 2608,
+            "Variation": 2306
+          },
+          {
+            "Date": "2024-03-23",
+            "FirstValue": 8980,
+            "LastValue": 5832,
+            "Variation": -3148
+          },
+          {
+            "Date": "2024-03-24",
+            "FirstValue": 8786,
+            "LastValue": 2865,
+            "Variation": -5921
+          },
+          {
+            "Date": "2024-03-25",
+            "FirstValue": 5768,
+            "LastValue": 9926,
+            "Variation": 4158
+          },
+          {
+            "Date": "2024-03-26",
+            "FirstValue": 827,
+            "LastValue": 1660,
+            "Variation": 833
+          },
+          {
+            "Date": "2024-03-28",
+            "FirstValue": 0,
+            "LastValue": 3286,
+            "Variation": 3286
+          }
+        ]
+      }
+    ]
+  },
+  "options": {
+    "type": [
+      { "value": 1, "label": "低電壓" },
+      { "value": 2, "label": "高電壓" },
+      { "value": 3, "label": "特高電壓" }
+    ],
+    "contract": [
+      { "value": 1, "label": "裝置契約" },
+      { "value": 2, "label": "需量契約" }
+    ],
+    "period": [
+      { "value": 1, "label": "二段式" },
+      { "value": 2, "label": "三段式" }
+    ]
+  },
+  "meters": [
+    {
+      "id": "1",
+      "name": "電錶1",
+      "region": "",
+      "contract": "1",
+      "unit": "kWh",
+      "electric": "",
+      "power": ""
+    }
+  ],
+  "settingList": [
+    {
+      "id": "1",
+      "name": "契約容量1",
+      "type": 1,
+      "contract": 1,
+      "timePeriod": 1,
+      "capacity": 3000,
+      "spareCapacity": 3000,
+      "offPeakCapacity": 1500,
+      "satHalfPeakCapacity": 1500,
+      "halfPeakCapacity": 1000
+    },
+    {
+      "id": "2",
+      "name": "契約容量2",
+      "type": 1,
+      "contract": 1,
+      "timePeriod": 1,
+      "capacity": 3000,
+      "spareCapacity": 3000,
+      "offPeakCapacity": 1500,
+      "satHalfPeakCapacity": 1500,
+      "halfPeakCapacity": 1000
+    },
+    {
+      "id": "3",
+      "name": "契約容量3",
+      "type": 1,
+      "contract": 1,
+      "timePeriod": 1,
+      "capacity": 3000,
+      "spareCapacity": 3000,
+      "offPeakCapacity": 1500,
+      "satHalfPeakCapacity": 1500,
+      "halfPeakCapacity": 1000
+    }
+  ],
+  "billList": [
+    {
+      "id": "1",
+      "name": "電費單排程1-2023/09/01",
+      "link": "test.txt"
+    }
+  ],
+  "schedule": [
+    {
+      "id": "1",
+      "name": "電費單排程1",
+      "meter": {
+        "setting": "1",
+        "calType": "1",
+        "meters": ["1"],
+        "date": 1
+      },
+      "season": {
+        "id": "1",
+        "name": "春季"
+      },
+      "startTime": "2023-09-26 15:00:00",
+      "repeat": {
+        "type": "1",
+        "cron": "0 0 15 * * *",
+        "count": 2
+      },
+      "endTime": {
+        "id": "3",
+        "value": "12"
+      }
+    },
+    {
+      "id": "2",
+      "name": "電費單排程2",
+      "meter": {
+        "setting": "1",
+        "calType": "2",
+        "meters": ["1"],
+        "date": 3
+      },
+      "season": {
+        "id": "1",
+        "name": "春季"
+      },
+      "startTime": "2023-09-26 00:00:00",
+      "repeat": {
+        "type": "2",
+        "cron": "0 0 15 * * 2",
+        "count": 1
+      },
+      "endTime": {
+        "id": "2",
+        "value": "2025-09-26 00:00:00"
+      }
+    },
+    {
+      "id": "3",
+      "name": "電費單排程3",
+      "meter": {
+        "setting": "1",
+        "calType": "1",
+        "meters": ["1"],
+        "date": 2
+      },
+      "season": null,
+      "startTime": "2023-09-26 00:00:00",
+      "repeat": {
+        "type": "4",
+        "cron": "0 0 0 26 9 *",
+        "count": 3
+      },
+      "endTime": {
+        "id": "1",
+        "value": null
+      }
+    }
+  ],
+  "fee": [
+    {
+      "RateId": "1",
+      "Name": "高壓-非夏月-二段式"
+    },
+    {
+      "RateId": "2",
+      "Name": "高壓-非夏月-三段式"
+    },
+    {
+      "RateId": "3",
+      "Name": "高壓-夏月-二段式"
+    },
+    {
+      "RateId": "4",
+      "Name": "高壓-夏月-三段式"
+    }
+  ],
+  "rateTimeList": [
+    {
+      "Year": 2024,
+      "Month": 4
+    }
+  ]
+}

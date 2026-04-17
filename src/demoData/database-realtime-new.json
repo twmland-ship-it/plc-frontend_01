@@ -1,0 +1,20 @@
+{
+  "data": [
+    {
+      "Id": "247ee7cc-048f-4fc2-b2b5-15addbc5b632",
+      "Name": "tag1",
+      "Value": 28765
+    },
+    {
+      "Id": "2344b2a8-8a8e-4999-9b8e-1168d57c376a",
+      "Name": "tag2",
+      "Value": 0
+    }
+  ],
+  "Summary": {
+    "Summation": 28765,
+    "Average": 14382.5,
+    "Maximum": 28765,
+    "Minimum": 0
+  }
+}

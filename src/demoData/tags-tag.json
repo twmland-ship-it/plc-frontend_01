@@ -1,0 +1,418 @@
+{
+  "class": [
+    {
+      "id": "1",
+      "name": "進排風系統"
+    },
+    {
+      "id": "2",
+      "name": "照明系統"
+    },
+    {
+      "id": "3",
+      "name": "消防系統"
+    },
+    {
+      "id": "4",
+      "name": "其他"
+    }
+  ],
+  "tags": [
+    {
+      "id": "1",
+      "status": true,
+      "region": ["1", "2", "3"],
+      "device": {
+        "id": "1",
+        "name": "device1"
+      },
+      "cctv": [1, 2, 3],
+      "name": "tag1",
+      "description": "description",
+      "type": {
+        "id": 1,
+        "name": "類比"
+      },
+      "saveType": {
+        "id": 1,
+        "name": "讀"
+      },
+
+      "dataType": {
+        "id": 1,
+        "name": "boolean"
+      },
+      "valueAddress": "400001",
+      "dataInterval": 1000,
+      "log": true,
+      "logInterval": 10,
+      "logIntervalType": "1",
+      "initValue": 100,
+      "retentive": false,
+      "tagClass": ["4", "6"],
+      "unit": {
+        "id": 1,
+        "name": "kWh"
+      },
+      "ignore": 1000,
+      "alarm": {
+        "status": "2",
+        "audio": false,
+        "important": false,
+        "content": "警報1",
+        "sop": "sop1",
+        "notifyGroup": [1, 2],
+        "HHStatus": true,
+        "HHValue": "200",
+        "HHContent": "數值過高",
+        "HIStatus": true,
+        "HIValue": "100",
+        "HIContent": "數值略高",
+        "LOStatus": true,
+        "LOValue": "50",
+        "LOContent": "數值略低",
+        "LLStatus": false,
+        "LLValue": "0",
+        "LLContent": "數值過低",
+        "digAlarmStatus": false,
+        "digAlarmValue": null,
+        "digAlarmContent": null,
+        "digNorStatus": false,
+        "digNorValue": null,
+        "digNorContent": null,
+        "exception": {
+          "status": true,
+          "startAt": "09:00:00",
+          "endAt": "18:00:01",
+          "until": 1,
+          "action": 1
+        }
+      },
+      "expression": {
+        "status": true,
+        "type": "4",
+        "tags": [
+          {
+            "id": "1",
+            "name": "tag1"
+          }
+        ],
+        "content": "@1@*5"
+      }
+    },
+    {
+      "id": "2",
+      "status": true,
+      "region": ["1", "2", "3"],
+      "device": {
+        "id": "2",
+        "name": "device2"
+      },
+      "cctv": [1, 2],
+      "name": "tag2",
+      "description": "description2",
+      "type": {
+        "id": 2,
+        "name": "數位"
+      },
+      "saveType": {
+        "id": 2,
+        "name": "讀/寫"
+      },
+
+      "dataType": {
+        "id": 2,
+        "name": "Float"
+      },
+      "valueAddress": "400002",
+      "dataInterval": 2000,
+      "log": true,
+      "logInterval": 60,
+      "logIntervalType": "2",
+      "initValue": 100,
+      "retentive": true,
+      "tagClass": ["4", "6"],
+      "unit": {
+        "id": 1,
+        "name": "A"
+      },
+      "ignore": 2000,
+      "alarm": {
+        "status": "3",
+        "audio": false,
+        "important": false,
+        "content": "警報2",
+        "sop": null,
+        "notifyGroup": [1, 2, 3],
+        "HHStatus": true,
+        "HHValue": null,
+        "HHContent": null,
+        "HIStatus": true,
+        "HIValue": null,
+        "HIContent": null,
+        "LOStatus": true,
+        "LOValue": null,
+        "LOContent": null,
+        "LLStatus": true,
+        "LLValue": null,
+        "LLContent": null,
+        "digAlarmStatus": true,
+        "digAlarmValue": "-1",
+        "digAlarmContent": "測點異常",
+        "digNorStatus": false,
+        "digNorValue": "1",
+        "digNorContent": "測點恢復正常",
+        "exception": {
+          "status": false,
+          "startAt": null,
+          "endAt": null,
+          "until": null,
+          "action": null
+        }
+      },
+      "expression": {
+        "status": true,
+        "type": "4",
+        "tags": [
+          {
+            "id": "1",
+            "name": "tag1"
+          },
+          {
+            "id": "2",
+            "name": "tag2"
+          }
+        ],
+        "content": "@1@*@2@+0.5"
+      }
+    },
+    {
+      "id": "3",
+      "status": false,
+      "region": ["1", "2", "3"],
+      "device": {
+        "id": "2",
+        "name": "device2"
+      },
+      "cctv": [1, 2],
+      "name": "tag3",
+      "description": "description3",
+      "type": {
+        "id": 2,
+        "name": "數位"
+      },
+      "saveType": {
+        "id": 2,
+        "name": "讀/寫"
+      },
+
+      "dataType": {
+        "id": 2,
+        "name": "Float"
+      },
+      "valueAddress": "400002",
+      "dataInterval": 2000,
+      "log": true,
+      "logInterval": 60,
+      "logIntervalType": "2",
+      "initValue": 50,
+      "retentive": false,
+      "unit": {
+        "id": 1,
+        "name": "A"
+      },
+      "tagClass": ["4", "6"],
+      "ignore": 2000,
+      "alarm": {
+        "status": "2",
+        "audio": true,
+        "important": true,
+        "content": "警報2",
+        "sop": null,
+        "notifyGroup": [1, 2, 3],
+        "HHStatus": true,
+        "HHValue": null,
+        "HHContent": null,
+        "HIStatus": true,
+        "HIValue": null,
+        "HIContent": null,
+        "LOStatus": true,
+        "LOValue": null,
+        "LOContent": null,
+        "LLStatus": true,
+        "LLValue": null,
+        "LLContent": null,
+        "digAlarmStatus": true,
+        "digAlarmValue": "-1",
+        "digAlarmContent": "測點異常",
+        "digNorStatus": true,
+        "digNorValue": "1",
+        "digNorContent": "測點恢復正常",
+        "exception": {
+          "status": false,
+          "startAt": null,
+          "endAt": null,
+          "until": null,
+          "action": null
+        }
+      },
+      "expression": {
+        "status": true,
+        "type": "3",
+        "transferMax": 100,
+        "transferMin": 1,
+        "max": 100,
+        "min": 1
+      }
+    },
+    {
+      "id": "4",
+      "status": true,
+      "region": ["1", "2", "3"],
+      "device": {
+        "id": "2",
+        "name": "device2"
+      },
+      "cctv": [1, 2],
+      "name": "tag4",
+      "description": "description3",
+      "type": {
+        "id": 1,
+        "name": "類比"
+      },
+      "saveType": {
+        "id": 2,
+        "name": "讀/寫"
+      },
+
+      "dataType": {
+        "id": 2,
+        "name": "Float"
+      },
+      "valueAddress": "400002",
+      "dataInterval": 2000,
+      "log": true,
+      "logInterval": 60,
+      "logIntervalType": "1",
+      "initValue": 20,
+      "retentive": true,
+      "tagClass": ["4", "6"],
+      "unit": {
+        "id": 1,
+        "name": "A"
+      },
+      "ignore": 2000,
+      "alarm": {
+        "status": "1",
+        "audio": false,
+        "important": true,
+        "content": "警報4",
+        "sop": null,
+        "notifyGroup": [1, 2, 3],
+        "HHStatus": true,
+        "HHValue": null,
+        "HHContent": null,
+        "HIStatus": false,
+        "HIValue": null,
+        "HIContent": null,
+        "LOStatus": true,
+        "LOValue": null,
+        "LOContent": null,
+        "LLStatus": true,
+        "LLValue": null,
+        "LLContent": null,
+        "digAlarmStatus": true,
+        "digAlarmValue": "-1",
+        "digAlarmContent": "測點異常",
+        "digNorStatus": true,
+        "digNorValue": "1",
+        "digNorContent": "測點恢復正常",
+        "exception": {
+          "status": false,
+          "startAt": null,
+          "endAt": null,
+          "until": null,
+          "action": null
+        }
+      },
+      "expression": {
+        "status": true,
+        "type": "1",
+        "valueMultiple": 2
+      }
+    }
+  ],
+  "options": {
+    "useOptions": [
+      {
+        "id": 1,
+        "name": "水"
+      },
+      {
+        "id": 2,
+        "name": "電"
+      }
+    ],
+    "unitOptions": [
+      {
+        "id": 1,
+        "name": "kWh"
+      },
+      {
+        "id": 2,
+        "name": "A"
+      }
+    ],
+    "dataTypeOptions": [
+      {
+        "id": 1,
+        "name": "Boolean"
+      },
+      {
+        "id": 2,
+        "name": "Float"
+      }
+    ],
+    "expressionOptions": [
+      {
+        "value": true,
+        "label": "啟用"
+      },
+      {
+        "value": false,
+        "label": "停用"
+      }
+    ],
+    "expressionTypeOptions": [
+      {
+        "id": "1",
+        "name": "倍數"
+      },
+      {
+        "id": "2",
+        "name": "線性"
+      },
+      {
+        "id": "3",
+        "name": "平方根"
+      },
+      {
+        "id": "4",
+        "name": "自定義"
+      }
+    ]
+  },
+  "importSettings": [
+    {
+      "id": "1",
+      "name": "匯入設定1",
+      "serverAddress": "192.168.13.1",
+      "serverPort": "65",
+      "appName": "app",
+      "systemName": "system1",
+      "systemNo": "2",
+      "username": "user",
+      "password": "user"
+    }
+  ]
+}

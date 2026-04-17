@@ -1,0 +1,429 @@
+{
+	"info": {
+		"_postman_id": "e569fabf-0efe-4eb5-bf39-45d90ce2a2c1",
+		"name": "Production2.0",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "40084853"
+	},
+	"item": [
+		{
+			"name": "ElectricContractSetting-電表契約",
+			"item": [
+				{
+					"name": "查詢電表契約集合",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{ServerToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{ServerApiUrl}}/electricity-contract-setting",
+							"host": [
+								"{{ServerApiUrl}}"
+							],
+							"path": [
+								"electricity-contract-setting"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "新增高壓二段時間電表契約(需量契約)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{ServerToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"ElectricityNumber\": \"123123123\",\r\n  \"Name\": \"123123123\",\r\n  \"PowerSupplyType\": 2,\r\n  \"LowVoltageContractType\": null,\r\n  \"TimeOfUseSegment\": 2,\r\n  \"ContractType\": 2,\r\n  \"IsBusiness\": false,\r\n  \"ContractCapacity\": 1000,\r\n  \"BackupCapacity\": 10,\r\n  \"HalfPeekContractCapacity\": 20,\r\n  \"SaturdayHalfPeakContractCapacity\": 30,\r\n  \"OffPeakContractCapacity\": 40\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ServerApiUrl}}/electricity-contract-setting",
+							"host": [
+								"{{ServerApiUrl}}"
+							],
+							"path": [
+								"electricity-contract-setting"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "新增低壓非時間電價電表契約(需量契約)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{ServerToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"ElectricityNumber\": \" 223-123-123\",\r\n  \"Name\": \"低壓~非時間契約\",\r\n  \"PowerSupplyType\": 1,\r\n  \"LowVoltageContractType\": 2,\r\n  \"TimeOfUseSegment\": 0,\r\n  \"ContractType\": 2,\r\n  \"IsBusiness\": false,\r\n  \"ContractCapacity\": 40,\r\n  \"BackupCapacity\": 0,\r\n  \"HalfPeekContractCapacity\": 0,\r\n  \"SaturdayHalfPeakContractCapacity\": 0,\r\n  \"OffPeakContractCapacity\": 0,\r\n \"NonSummerMonthContractCapacity\": 20\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ServerApiUrl}}/electricity-contract-setting",
+							"host": [
+								"{{ServerApiUrl}}"
+							],
+							"path": [
+								"electricity-contract-setting"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "編輯高壓時間電價電表契約(需量契約)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{ServerToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n      \"ElectricityNumber\": \"33_00-2197-98-8\",\r\n        \"Name\": \"低壓非時間需量契約\",\r\n        \"PowerSupplyType\": \"LowVoltage\",\r\n        \"LowVoltageContractType\": \"Power\",\r\n        \"TimeOfUseSegment\": 0,\r\n        \"ContractType\": \"Demand\",\r\n        \"IsBusiness\": false,\r\n        \"ContractCapacity\": 180,\r\n        \"BackupCapacity\": 0,\r\n        \"HalfPeekContractCapacity\": 0,\r\n        \"SaturdayHalfPeakContractCapacity\": 0,\r\n       \"OffPeakContractCapacity\": 0,\r\n        \"NonSummerMonthContractCapacity\":50\r\n }\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ServerApiUrl}}/electricity-contract-setting/0a6df179-436b-488d-b0a7-a1093e1568e4",
+							"host": [
+								"{{ServerApiUrl}}"
+							],
+							"path": [
+								"electricity-contract-setting",
+								"0a6df179-436b-488d-b0a7-a1093e1568e4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "編輯低壓非時間電價電表契約",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{ServerToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n      \"ElectricityNumber\": \"33_00-2197-98-8\",\r\n        \"Name\": \"低壓非時間需量契約\",\r\n        \"PowerSupplyType\": 1,\r\n        \"LowVoltageContractType\": 2,\r\n        \"TimeOfUseSegment\": 0,\r\n        \"ContractType\": 2,\r\n        \"IsBusiness\": false,\r\n        \"ContractCapacity\": 80,\r\n        \"BackupCapacity\": 0,\r\n        \"HalfPeekContractCapacity\": 0,\r\n        \"SaturdayHalfPeakContractCapacity\": 0,\r\n       \"OffPeakContractCapacity\": 0,\r\n        \"NonSummerMonthContractCapacity\":20\r\n }\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ServerApiUrl}}/electricity-contract-setting/0a6df179-436b-488d-b0a7-a1093e1568e4",
+							"host": [
+								"{{ServerApiUrl}}"
+							],
+							"path": [
+								"electricity-contract-setting",
+								"0a6df179-436b-488d-b0a7-a1093e1568e4"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "ElectricityRate-低壓, 非時間電價",
+			"item": [
+				{
+					"name": "新增一筆低壓非時間電價(需量契約)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{ServerToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n \"TemporaryUsageMultiplier\":1.6,  // 臨時用電倍數(非臨時用電為1, 臨時電依規定, 小數)\r\n  \"Year\": 2025,  // 電價實施年\r\n  \"Month\":1,  // 電價實施月\r\n  \"SummerMonth\": {\r\n    \"StartDate\": \"06-01\",  // 每年夏月開始月日(MM-dd)\r\n    \"EndDate\": \"09-30\"   // 每年夏月截止月日(MM-dd)\r\n  },\r\n  \"PeakTimeRanges\": {         // PeakTimeRanges 故定這個內容\r\n    \"WeekDays\": [\r\n      {\r\n        \"PeakType\": 0,\r\n        \"StartTime\": \"00:00:00\",\r\n        \"EndTime\": \"00:00:00\",\r\n        \"UseType\": 1\r\n      }\r\n    ]\r\n   },\r\n  \"DetailItems\": [\r\n    {   // 夏月電價\r\n      \"DataYear\": 2025,   // 電價實施年\r\n      \"DataMonth\": 1, // 電價實施月\r\n      \"BasicRateSinglePhase\": 0,  // 固定這個值\r\n      \"BasicRateThreePhase\": 0,  // 固定這個值\r\n      \"BasicRateDeviceContractByDevice\": 137.5, // 基本電費/裝置契約/夏月電價\r\n      \"BasicRateDeviceContractByHouse\": 0,  // 固定這個值\r\n      \"DemandContractByHouse\": 0, // 固定這個值\r\n      \"DemandContractRegular\": 236.2,     //基本電費/需量契約/經常契約/夏月電價\r\n      \"DemandContractNonSummer\": 0,    //基本電費/需量契約/非夏月契約/夏月電價\r\n      \"DemandContractSaturdayHalfPeak\": 0,  // 固定這個值\r\n      \"DemandContractOffPeak\": 0,  // 固定這個值\r\n      \"MobileRateWeekdaysPeak\": 4.08,  // 流動電費/夏月電價\r\n      \"MobileRateWeekdaysHalfPeak\": 0, // 固定這個值\r\n      \"MobileRateWeekdaysOffPeak\": 0, // 固定這個值\r\n      \"MobileRateSaturdayHalfPeak\": 0, // 固定這個值\r\n      \"MobileRateSaturdayOffPeak\": 0, // 固定這個值\r\n      \"MobileRateSundayAndOffDayPeak\": 0, // 固定這個值\r\n      \"MobileRateExceedKwh\": 0, // 固定這個值\r\n      \"MobileRateExceedPrice\": 0, // 固定這個值\r\n      \"IsSummer\": true  // 固定這個值\r\n    },\r\n     {   // 非夏月電價\r\n      \"DataYear\": 2025, // 電價實施年\r\n      \"DataMonth\": 1, // 電價實施月\r\n     \"BasicRateSinglePhase\": 0,  // 固定這個值\r\n      \"BasicRateThreePhase\": 0,  // 固定這個值\r\n      \"BasicRateDeviceContractByDevice\": 137.5, // 基本電費/裝置契約/非夏月電價\r\n      \"BasicRateDeviceContractByHouse\": 0, // 固定這個值\r\n      \"DemandContractByHouse\": 0, // 固定這個值\r\n      \"DemandContractRegular\": 173.2,    //基本電費/需量契約/經常契約/非夏月電價\r\n      \"DemandContractNonSummer\": 173.2, //基本電費/需量契約/非夏月契約/非夏月電價\r\n      \"DemandContractSaturdayHalfPeak\": 0, //固定這個值\r\n      \"DemandContractOffPeak\": 0, //固定這個值\r\n      \"MobileRateWeekdaysPeak\": 3.87, // 流動電費/非夏月電價\r\n      \"MobileRateWeekdaysHalfPeak\": 0, //固定這個值\r\n      \"MobileRateWeekdaysOffPeak\": 0, //固定這個值\r\n      \"MobileRateSaturdayHalfPeak\": 0, //固定這個值\r\n      \"MobileRateSaturdayOffPeak\": 0, //固定這個值\r\n      \"MobileRateSundayAndOffDayPeak\": 0, //固定這個值\r\n      \"MobileRateExceedKwh\": 0, //固定這個值\r\n      \"MobileRateExceedPrice\": 0, //固定這個值\r\n      \"IsSummer\": false//固定這個值\r\n       }\r\n  ]\r\n}\r\n\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ServerApiUrl}}/electricity-rate/power-supply/0/segment/0/details",
+							"host": [
+								"{{ServerApiUrl}}"
+							],
+							"path": [
+								"electricity-rate",
+								"power-supply",
+								"0",
+								"segment",
+								"0",
+								"details"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "查詢低壓非時間電費費率基本設定集合",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{ServerToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{ServerApiUrl}}/electricity-rate/power-supply/0/segment/0/time-settings",
+							"host": [
+								"{{ServerApiUrl}}"
+							],
+							"path": [
+								"electricity-rate",
+								"power-supply",
+								"0",
+								"segment",
+								"0",
+								"time-settings"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "查詢低壓非時間電價明細",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{ServerToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "{{ServerApiUrl}}/electricity-rate/power-supply/0/segment/0/details?Year=2025&Month=1",
+							"host": [
+								"{{ServerApiUrl}}"
+							],
+							"path": [
+								"electricity-rate",
+								"power-supply",
+								"0",
+								"segment",
+								"0",
+								"details"
+							],
+							"query": [
+								{
+									"key": "Year",
+									"value": "2025"
+								},
+								{
+									"key": "Month",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "編輯低壓非時間電價",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{ServerToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"TemporaryUsageMultiplier\":1.62,\r\n  \"Year\": 2025,\r\n  \"Month\": 1,\r\n  \"SummerMonth\": {\r\n    \"StartDate\": \"06-01\",\r\n    \"EndDate\": \"10-01\"\r\n  },\r\n  \"PeakTimeRanges\": {\r\n    \"WeekDays\": [\r\n      {\r\n        \"PeakType\": 0,\r\n        \"StartTime\": \"00:00:00\",\r\n        \"EndTime\": \"00:00:00\",\r\n        \"UseType\": 1\r\n      }\r\n    ]\r\n  },\r\n  \"DetailItems\": [\r\n    {\r\n      \"DataYear\": 2025,\r\n      \"DataMonth\":1,\r\n      \"BasicRateSinglePhase\": 0,\r\n      \"BasicRateThreePhase\": 0,\r\n      \"BasicRateDeviceContractByDevice\": 137.51,\r\n      \"BasicRateDeviceContractByHouse\": 0,\r\n      \"DemandContractByHouse\": 0,\r\n      \"DemandContractRegular\": 236.21,\r\n      \"DemandContractNonSummer\": 0,\r\n      \"DemandContractSaturdayHalfPeak\": 0,\r\n      \"DemandContractOffPeak\": 0,\r\n      \"MobileRateWeekdaysPeak\": 4.081,\r\n      \"MobileRateWeekdaysHalfPeak\": 0,\r\n      \"MobileRateWeekdaysOffPeak\": 0,\r\n      \"MobileRateSaturdayHalfPeak\": 0,\r\n      \"MobileRateSaturdayOffPeak\": 0,\r\n      \"MobileRateSundayAndOffDayPeak\": 0,\r\n      \"MobileRateExceedKwh\": 0,\r\n      \"MobileRateExceedPrice\": 0,\r\n      \"IsSummer\": true\r\n      \r\n    },\r\n    {\r\n      \"DataYear\": 2025,\r\n      \"DataMonth\": 1,\r\n      \"BasicRateSinglePhase\": 0,\r\n      \"BasicRateThreePhase\": 0,\r\n      \"BasicRateDeviceContractByDevice\": 137.51,\r\n      \"BasicRateDeviceContractByHouse\": 0,\r\n      \"DemandContractByHouse\": 0,\r\n      \"DemandContractRegular\": 173.21,\r\n      \"DemandContractNonSummer\": 173.21,\r\n      \"DemandContractSaturdayHalfPeak\": 0,\r\n      \"DemandContractOffPeak\": 0,\r\n      \"MobileRateWeekdaysPeak\": 3.871,\r\n      \"MobileRateWeekdaysHalfPeak\": 0,\r\n      \"MobileRateWeekdaysOffPeak\": 0,\r\n      \"MobileRateSaturdayHalfPeak\": 0,\r\n      \"MobileRateSaturdayOffPeak\": 0,\r\n      \"MobileRateSundayAndOffDayPeak\": 0,\r\n      \"MobileRateExceedKwh\": 0,\r\n      \"MobileRateExceedPrice\": 0,\r\n      \"IsSummer\": false\r\n     \r\n    }\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ApiUrl}}/electricity-rate/power-supply/0/segment/0/details",
+							"host": [
+								"{{ApiUrl}}"
+							],
+							"path": [
+								"electricity-rate",
+								"power-supply",
+								"0",
+								"segment",
+								"0",
+								"details"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "刪除低壓非時間電價資料",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AccessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"Year\": 2025,\r\n  \"Month\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ApiUrl}}/electricity-rate/power-supply/0/segment/0/details",
+							"host": [
+								"{{ApiUrl}}"
+							],
+							"path": [
+								"electricity-rate",
+								"power-supply",
+								"0",
+								"segment",
+								"0",
+								"details"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Oco.HistoryReport",
+			"item": [
+				{
+					"name": "依日期查詢電價",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "processDate",
+								"value": "2025-07-03",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{OcoHistoryReportApiUrl}}/fee-calculation/electricity/date/2025-01",
+							"host": [
+								"{{OcoHistoryReportApiUrl}}"
+							],
+							"path": [
+								"fee-calculation",
+								"electricity",
+								"date",
+								"2025-01"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

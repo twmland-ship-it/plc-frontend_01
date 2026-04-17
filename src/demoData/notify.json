@@ -1,0 +1,158 @@
+{
+  "options": {
+    "type": [
+      {
+        "id": "1",
+        "name": "Line"
+      },
+      {
+        "id": "2",
+        "name": "email"
+      },
+      {
+        "id": "3",
+        "name": "簡訊"
+      }
+    ],
+    "line": [
+      {
+        "id": "1",
+        "name": "line服務1"
+      },
+      {
+        "id": "2",
+        "name": "line服務2"
+      }
+    ],
+    "groups": [
+      {
+        "id": "1",
+        "name": "聊天群組1"
+      },
+      {
+        "id": "2",
+        "name": "聊天群組2"
+      },
+      {
+        "id": "3",
+        "name": "聊天群組3"
+      },
+      {
+        "id": "4",
+        "name": "聊天群組4"
+      }
+    ]
+  },
+  "groups": [
+    {
+      "id": 1,
+      "name": "聊天群組1",
+      "type": {
+        "id": "1",
+        "name": "Line"
+      },
+      "starttime": "00:00:00",
+      "endtime": "12:00:00",
+      "lineId": "1",
+      "values": []
+    },
+    {
+      "id": 2,
+      "name": "聊天群組2",
+      "type": {
+        "id": "2",
+        "name": "email"
+      },
+      "starttime": "00:00:00",
+      "endtime": "12:00:00",
+      "lineId": null,
+      "values": [
+        { "id": "1", "name": "user1", "value": "test@test.test" },
+        { "id": "2", "name": "user2", "value": "test2@test.test" }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "聊天群組3",
+      "type": {
+        "id": "1",
+        "name": "Line"
+      },
+      "starttime": "00:00:00",
+      "endtime": "12:00:00",
+      "lineId": "1",
+      "values": []
+    },
+    {
+      "id": 4,
+      "name": "聊天群組4",
+      "type": {
+        "id": "2",
+        "name": "email"
+      },
+      "starttime": "00:00:00",
+      "endtime": "12:00:00",
+      "lineId": null,
+      "values": [
+        { "id": "1", "name": "user1", "value": "test@test.test" },
+        { "id": "2", "name": "user2", "value": "test2@test.test" }
+      ]
+    },
+    {
+      "id": 5,
+      "name": "聊天群組5",
+      "type": {
+        "id": "3",
+        "name": "簡訊"
+      },
+      "starttime": "00:00:00",
+      "endtime": "12:00:00",
+      "lineId": null,
+      "values": [
+        { "id": "1", "name": "user1", "value": "0912345678" },
+        { "id": "2", "name": "user2", "value": "0987654321" }
+      ]
+    }
+  ],
+  "setting": {
+    "line": {
+      "service": [
+        {
+          "id": "1",
+          "name": "line服務1",
+          "clientId": "123456789",
+          "clientSecret": "abcdefg",
+          "subscribeURL": "https://google.com"
+        },
+        {
+          "id": "2",
+          "name": "line服務2",
+          "clientId": "123456789",
+          "clientSecret": "abcdefg",
+          "subscribeURL": "https://google.com"
+        }
+      ]
+    },
+    "email": {
+      "smtpAddress": "test@test.test",
+      "smptPort": 402,
+      "username": "test@email.com",
+      "password": "password",
+      "protocol": "SSL"
+    }
+  },
+  "history": [
+    {
+      "id": "1",
+      "content": "test1",
+      "groups": ["group1", "group2"],
+      "time": "2023-09-01 10:00:00"
+    },
+    {
+      "id": "2",
+      "content": "test2",
+      "groups": ["group2", "group3"],
+      "time": "2023-09-20 10:00:00"
+    }
+  ]
+}

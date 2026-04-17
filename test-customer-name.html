@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CustomerName 測試</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .test-section {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        button {
+            background: #1890ff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background: #40a9ff;
+        }
+        .result {
+            margin-top: 10px;
+            padding: 10px;
+            background: #f6ffed;
+            border: 1px solid #b7eb8f;
+            border-radius: 4px;
+        }
+        .error {
+            background: #fff2f0;
+            border-color: #ffccc7;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>CustomerName 顯示功能測試</h1>
+        
+        <div class="test-section">
+            <h3>1. 模擬登入資料設定</h3>
+            <p>點擊下方按鈕來模擬設定登入後的用戶資料到 localStorage：</p>
+            <button onclick="setTestUserData()">設定測試用戶資料</button>
+            <button onclick="clearUserData()">清除用戶資料</button>
+            <div id="setResult" class="result" style="display: none;"></div>
+        </div>
+
+        <div class="test-section">
+            <h3>2. 檢查 localStorage 中的資料</h3>
+            <button onclick="checkUserData()">檢查用戶資料</button>
+            <div id="checkResult" class="result" style="display: none;"></div>
+        </div>
+
+        <div class="test-section">
+            <h3>3. 模擬 Vue 組件中的 CustomerName 取得邏輯</h3>
+            <button onclick="testCustomerNameLogic()">測試 CustomerName 邏輯</button>
+            <div id="logicResult" class="result" style="display: none;"></div>
+        </div>
+
+        <div class="test-section">
+            <h3>4. 使用說明</h3>
+            <p>完成測試後，請到實際的應用程式中：</p>
+            <ol>
+                <li>進行登入操作</li>
+                <li>檢查 header 最上方中間是否顯示 CustomerName</li>
+                <li>切換不同頁面確認 CustomerName 持續顯示</li>
+            </ol>
+        </div>
+    </div>
+
+    <script>
+        // 模擬設定用戶資料到 localStorage
+        function setTestUserData() {
+            const testUserData = {
+                StaffName: "測試員工",
+                PermissionCode: "ADMIN",
+                UniformNumber: "EMP001",
+                CustomerId: "fdff1878-a54a-44ee-b82c-a62bdc5cdb55",
+                CustomerName: "橙設物業管理公司",
+                EnableState: 1
+            };
+            
+            try {
+                localStorage.setItem("userData", JSON.stringify(testUserData));
+                showResult("setResult", "✅ 測試用戶資料已設定成功！", false);
+            } catch (error) {
+                showResult("setResult", "❌ 設定失敗：" + error.message, true);
+            }
+        }
+
+        // 清除用戶資料
+        function clearUserData() {
+            try {
+                localStorage.removeItem("userData");
+                showResult("setResult", "🗑️ 用戶資料已清除", false);
+            } catch (error) {
+                showResult("setResult", "❌ 清除失敗：" + error.message, true);
+            }
+        }
+
+        // 檢查 localStorage 中的用戶資料
+        function checkUserData() {
+            try {
+                const userData = localStorage.getItem("userData");
+                if (userData) {
+                    const parsedData = JSON.parse(userData);
+                    const resultText = `
+                        📋 用戶資料內容：<br>
+                        • StaffName: ${parsedData.StaffName || "未設定"}<br>
+                        • CustomerName: ${parsedData.CustomerName || "未設定"}<br>
+                        • CustomerId: ${parsedData.CustomerId || "未設定"}<br>
+                        • PermissionCode: ${parsedData.PermissionCode || "未設定"}
+                    `;
+                    showResult("checkResult", resultText, false);
+                } else {
+                    showResult("checkResult", "⚠️ localStorage 中沒有找到 userData", true);
+                }
+            } catch (error) {
+                showResult("checkResult", "❌ 解析用戶資料失敗：" + error.message, true);
+            }
+        }
+
+        // 測試 Vue 組件中的 CustomerName 邏輯
+        function testCustomerNameLogic() {
+            try {
+                // 模擬 Vue 組件中的邏輯
+                function getCustomerName() {
+                    try {
+                        const userData = localStorage.getItem("userData");
+                        if (userData) {
+                            const parsedData = JSON.parse(userData);
+                            return parsedData.CustomerName || "";
+                        }
+                        return "";
+                    } catch (error) {
+                        console.error("Error parsing userData from localStorage:", error);
+                        return "";
+                    }
+                }
+
+                const customerName = getCustomerName();
+                if (customerName) {
+                    showResult("logicResult", `✅ CustomerName 取得成功：「${customerName}」`, false);
+                } else {
+                    showResult("logicResult", "⚠️ CustomerName 為空或未設定", true);
+                }
+            } catch (error) {
+                showResult("logicResult", "❌ 邏輯測試失敗：" + error.message, true);
+            }
+        }
+
+        // 顯示結果的輔助函數
+        function showResult(elementId, message, isError) {
+            const element = document.getElementById(elementId);
+            element.innerHTML = message;
+            element.style.display = "block";
+            element.className = isError ? "result error" : "result";
+        }
+
+        // 頁面載入時自動檢查
+        window.onload = function() {
+            checkUserData();
+        };
+    </script>
+</body>
+</html>

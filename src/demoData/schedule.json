@@ -1,0 +1,282 @@
+{
+  "holiday": [
+    {
+      "date": "2023-09-29",
+      "repeat": "1",
+      "text": "中秋節"
+    },
+    {
+      "date": "2023-09-30",
+      "repeat": "1",
+      "text": "例假日"
+    },
+    {
+      "date": "2023-10-01",
+      "repeat": "1",
+      "text": "例假日"
+    },
+    {
+      "date": "2023-09-24",
+      "repeat": "2",
+      "text": "例假日"
+    }
+  ],
+  "holidayOptions": {
+    "repeat": [
+      {
+        "id": "1",
+        "name": "不重複"
+      },
+      {
+        "id": "2",
+        "name": "每週"
+      },
+      {
+        "id": "3",
+        "name": "每月"
+      },
+      {
+        "id": "4",
+        "name": "每年"
+      }
+    ]
+  },
+  "season": [
+    {
+      "id": "1",
+      "name": "春季",
+      "period": ["03/01", "05/31"]
+    },
+    {
+      "id": "2",
+      "name": "夏季",
+      "period": ["06/01", "08/31"]
+    }
+  ],
+  "scheduleOptions": {
+    "season": [
+      {
+        "id": "1",
+        "name": "春季"
+      },
+      {
+        "id": "2",
+        "name": "夏季"
+      }
+    ],
+    "endTime": [
+      {
+        "id": "1",
+        "name": "持續不斷"
+      },
+      {
+        "id": "2",
+        "name": "結束於",
+        "settings": [
+          {
+            "type": "dateAndTimePicker",
+            "required": true
+          }
+        ]
+      },
+      {
+        "id": "3",
+        "name": "重複",
+        "settings": [
+          {
+            "append": "次",
+            "type": "input",
+            "required": true
+          }
+        ]
+      }
+    ],
+    "repeat": [
+      {
+        "id": "1",
+        "name": "日"
+      },
+      {
+        "id": "2",
+        "name": "週"
+      },
+      {
+        "id": "3",
+        "name": "月"
+      },
+      {
+        "id": "4",
+        "name": "年"
+      },
+      {
+        "id": "5",
+        "name": "工作日"
+      },
+      {
+        "id": "6",
+        "name": "非工作日"
+      }
+    ],
+    "tagClass": [
+      {
+        "id": "1",
+        "name": "進排風系統"
+      },
+      {
+        "id": "2",
+        "name": "照明系統"
+      },
+      {
+        "id": "3",
+        "name": "消防系統"
+      },
+      {
+        "id": "4",
+        "name": "其他"
+      }
+    ],
+    "groupClass": [
+      {
+        "id": "1",
+        "name": "電錶"
+      },
+      {
+        "id": "2",
+        "name": "消防"
+      },
+      {
+        "id": "3",
+        "name": "其他"
+      }
+    ],
+    "searchType": [
+      {
+        "id": "1",
+        "name": "依測點"
+      },
+      {
+        "id": "2",
+        "name": "依群組"
+      }
+    ]
+  },
+  "schedule": [
+    {
+      "id": "1",
+      "name": "排程1",
+      "tags": [
+        {
+          "id": "1",
+          "signalValue": "1",
+          "name": "tag1"
+        },
+        {
+          "id": "28",
+          "signalValue": "1",
+          "name": "tag28"
+        },
+        {
+          "id": "22",
+          "signalValue": "1",
+          "name": "tag22"
+        },
+        {
+          "id": "32",
+          "signalValue": "1",
+          "name": "tag32"
+        }
+      ],
+      "season": {
+        "id": "1",
+        "name": "春季"
+      },
+      "startTime": "2023-09-26 15:00:00",
+      "repeat": {
+        "type": "1",
+        "cron": "0 0 15 * * *",
+        "count": 2
+      },
+      "endTime": {
+        "id": "3",
+        "value": "12"
+      }
+    },
+    {
+      "id": "2",
+      "name": "排程2",
+      "tags": [
+        {
+          "id": "1",
+          "signalValue": "1",
+          "name": "tag1"
+        },
+        {
+          "id": "28",
+          "signalValue": "1",
+          "name": "tag28"
+        },
+        {
+          "id": "22",
+          "signalValue": "1",
+          "name": "tag22"
+        },
+        {
+          "id": "32",
+          "signalValue": "1",
+          "name": "tag32"
+        }
+      ],
+      "season": {
+        "id": "1",
+        "name": "春季"
+      },
+      "startTime": "2023-09-26 00:00:00",
+      "repeat": {
+        "type": "2",
+        "cron": "0 0 15 * * 2",
+        "count": 1
+      },
+      "endTime": {
+        "id": "2",
+        "value": "2025-09-26 00:00:00"
+      }
+    },
+    {
+      "id": "3",
+      "name": "排程3",
+      "tags": [
+        {
+          "id": "1",
+          "signalValue": "1",
+          "name": "tag1"
+        },
+        {
+          "id": "28",
+          "signalValue": "1",
+          "name": "tag28"
+        },
+        {
+          "id": "33",
+          "signalValue": "1",
+          "name": "tag33"
+        },
+        {
+          "id": "32",
+          "signalValue": "1",
+          "name": "tag32"
+        }
+      ],
+      "season": null,
+      "startTime": "2023-09-26 00:00:00",
+      "repeat": {
+        "type": "4",
+        "cron": "0 0 0 26 9 *",
+        "count": 3
+      },
+      "endTime": {
+        "id": "1",
+        "value": null
+      }
+    }
+  ]
+}

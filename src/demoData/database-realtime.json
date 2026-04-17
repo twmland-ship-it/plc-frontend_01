@@ -1,0 +1,52 @@
+{
+  "options": {
+    "tagClass": [
+      {
+        "id": "1",
+        "name": "進排風系統"
+      },
+      {
+        "id": "2",
+        "name": "照明系統"
+      },
+      {
+        "id": "3",
+        "name": "消防系統"
+      },
+      {
+        "id": "4",
+        "name": "其他"
+      }
+    ]
+  },
+  "data": [
+    {
+      "id": "1",
+      "name": "tag1",
+      "status": "1",
+      "value": 100,
+      "unit": "V"
+    },
+    {
+      "id": "2",
+      "name": "tag2",
+      "status": "2",
+      "value": 100,
+      "unit": "V"
+    },
+    {
+      "id": "3",
+      "name": "tag3",
+      "status": "3",
+      "value": 1.5,
+      "unit": "A"
+    },
+    {
+      "id": "4",
+      "name": "tag4",
+      "status": "1",
+      "value": 20,
+      "unit": "無"
+    }
+  ]
+}
