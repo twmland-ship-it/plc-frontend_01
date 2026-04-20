@@ -1,4 +1,5 @@
 export const auth0options = {
+  plugins: [],
   theme: {
     logo: "/oco_logo.png",
     primaryColor: "#FF8000",
