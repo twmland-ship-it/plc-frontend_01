@@ -8,6 +8,8 @@ const state = () => ({
   tableData: [],
 
   loading: false,
+  fetching: false,
+  hasLoadedOnce: false,
   error: null,
   staleWarning: false,
   fatalError: null,
@@ -60,9 +62,10 @@ const mergeBySummaryId = (oldList, newList, sortOrder) => {
 };
 
 const actions = {
-  async getData({ commit, state }, { _isPoll = false } = {}) {
+  async getData({ commit, state }, payload = {}) {
+    const isPoll = !!payload?.isPoll || !!payload?._isPoll;
     try {
-      commit("getDataBegin");
+      commit("getDataBegin", { isPoll });
       const res = await api.getStatusList();
       const list = res?.data?.Detail?.StageDetailList ?? [];
       const nextList = mergeBySummaryId(state.tableData, list, state.nameSortOrder);

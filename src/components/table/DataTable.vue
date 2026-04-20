@@ -53,8 +53,9 @@
           :pagination="{
             pageSize: pageSize,
             pageSizeOptions: pageSizeOptions,
-            showSizeChanger: true,
+            showSizeChanger: showSizeChanger,
           }"
+          :showSorterTooltip="showSorterTooltip"
           :childrenColumnName="childrenColumnName"
           :row-class-name="getRowClassName"
           :data-source="tableData"
@@ -68,9 +69,10 @@
           :pagination="{
             pageSize: pageSize,
             pageSizeOptions: pageSizeOptions,
-            showSizeChanger: true,
+            showSizeChanger: showSizeChanger,
           }"
           class="ant-table-striped"
+          :showSorterTooltip="showSorterTooltip"
           :childrenColumnName="childrenColumnName"
           :data-source="tableData"
           :row-class-name="getRowClassName"
@@ -100,9 +102,11 @@ export default defineComponent({
     filterOption: VueTypes.bool,
     filterOnchange: VueTypes.bool,
     rowSelection: VueTypes.bool,
+    showSizeChanger: VueTypes.bool.def(true),
     defaultSelected: VueTypes.array,
     tableData: VueTypes.array,
     columns: VueTypes.array,
+    showSorterTooltip: VueTypes.oneOfType([VueTypes.bool, VueTypes.object]),
     handleDataSearch: VueTypes.func,
     handleAdd: VueTypes.func,
     handleBack: VueTypes.func,

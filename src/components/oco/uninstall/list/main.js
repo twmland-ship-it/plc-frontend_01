@@ -1,10 +1,13 @@
-import { defineComponent, computed } from "vue";
+import { defineComponent, computed, h } from "vue";
 import DataTables from "@/components/table/DataTable.vue";
 import { useStore } from "vuex";
 
 const stageUnloadText = (row, stage) => {
   const s = row?.StageDetailList?.find((x) => Number(x?.Stage) === Number(stage));
-  return s?.UnloadULmtText ?? "-";
+  const unloadText = s?.UnloadULmtText ?? "-";
+  if (unloadText === "-" || unloadText === "") return unloadText;
+  const ratioText = s?.UnloadULmtRatioWithPercentageSignText ?? "";
+  return ratioText ? `${unloadText} (${ratioText})` : unloadText;
 };
 
 const bySummaryNameAsc = (a, b) => {
@@ -16,6 +19,12 @@ const bySummaryNameAsc = (a, b) => {
   });
 };
 
+const bySummaryIdAsc = (a, b) => {
+  const aId = String(a?.SummaryId ?? "");
+  const bId = String(b?.SummaryId ?? "");
+  return aId.localeCompare(bId, "en", { numeric: true, sensitivity: "base" });
+};
+
 export default defineComponent({
   components: {
     DataTables,
@@ -24,20 +33,8 @@ export default defineComponent({
     const store = useStore();
     const { state, commit } = store;
 
-    const loading = computed(() => state.uninstall.loading);
-    const tableData = computed(() => {
-      const list = Array.isArray(state.uninstall.tableData)
-        ? state.uninstall.tableData
-        : [];
-
-      return list.map((row) => ({
-        ...row,
-        key: row?.SummaryId ?? row?.SummaryName ?? String(Math.random()),
-        Stage1: stageUnloadText(row, 1),
-        Stage2: stageUnloadText(row, 2),
-        Stage3: stageUnloadText(row, 3),
-      }));
-    });
+    const fetching = computed(() => !!state.uninstall.fetching);
+    const hasLoadedOnce = computed(() => !!state.uninstall.hasLoadedOnce);
 
     const staleWarning = computed(() => !!state.uninstall.staleWarning);
     const fatalErrorMessage = computed(() =>
@@ -52,7 +49,14 @@ export default defineComponent({
       const order = s?.order;
       if (order === "ascend" || order === "descend") {
         commit("uninstall/setNameSortOrder", order);
+        return;
       }
+
+      // Some table versions may emit `undefined` on toggle; keep it two-state.
+      commit(
+        "uninstall/setNameSortOrder",
+        nameSortOrder.value === "ascend" ? "descend" : "ascend"
+      );
     };
 
     const columns = computed(() => [
@@ -64,22 +68,26 @@ export default defineComponent({
         align: "left",
         sortOrder: nameSortOrder.value,
         sortDirections: ["ascend", "descend"],
-        sorter: (a, b) => bySummaryNameAsc(a, b),
+        sorter: true, // controlled/server-side sorting (we keep list sorted ourselves)
       },
       {
-        title: "契約容量",
+        title: "契約容量(kW)①",
         dataIndex: "ContractCapacityText",
         key: "ContractCapacityText",
         align: "right",
       },
       {
-        title: "即時需量",
+        title: "即時需量(kW)②",
         dataIndex: "CurrentDemandText",
         key: "CurrentDemandText",
         align: "right",
       },
       {
-        title: "即時需量比",
+        title: () =>
+          h("div", { style: "display:flex; flex-direction:column;" }, [
+            h("div", { class: "uninstall-coltitle__line1" }, "即時需量比"),
+            h("div", { class: "uninstall-coltitle__line2" }, "((②/①) * 100)%"),
+          ]),
         dataIndex: "CurrentDemandAndContractCapacityRatioTextWithPercentageSign",
         key: "CurrentDemandAndContractCapacityRatioTextWithPercentageSign",
         align: "right",
@@ -107,12 +115,34 @@ export default defineComponent({
       },
     ]);
 
+    const sortedTableData = computed(() => {
+      const list = Array.isArray(state.uninstall.tableData)
+        ? state.uninstall.tableData
+        : [];
+
+      const dir = nameSortOrder.value === "descend" ? -1 : 1;
+      const sorted = list.slice().sort((a, b) => {
+        const byName = bySummaryNameAsc(a, b);
+        if (byName !== 0) return byName * dir;
+        return bySummaryIdAsc(a, b) * dir;
+      });
+
+      return sorted.map((row) => ({
+        ...row,
+        key: row?.SummaryId ?? row?.SummaryName ?? String(Math.random()),
+        Stage1: stageUnloadText(row, 1),
+        Stage2: stageUnloadText(row, 2),
+        Stage3: stageUnloadText(row, 3),
+      }));
+    });
+
     return {
-      loading,
+      fetching,
+      hasLoadedOnce,
       staleWarning,
       fatalErrorMessage,
       columns,
-      tableData,
+      tableData: sortedTableData,
       handleTableChange,
     };
   },

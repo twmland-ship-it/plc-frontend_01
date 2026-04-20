@@ -1,10 +1,11 @@
 export default {
-  getDataBegin(state) {
-    state.loading = true;
+  getDataBegin(state, { isPoll } = {}) {
+    state.fetching = true;
   },
 
   getDataSuccess(state, data) {
-    state.loading = false;
+    state.fetching = false;
+    state.hasLoadedOnce = true;
     state.initData = data;
     state.tableData = data;
     state.error = null;
@@ -13,7 +14,8 @@ export default {
   },
 
   getDataErrNoData(state, msg) {
-    state.loading = false;
+    state.fetching = false;
+    state.hasLoadedOnce = true;
     state.error = msg;
     state.fatalError = msg;
     state.staleWarning = false;
@@ -22,7 +24,8 @@ export default {
   },
 
   getDataErrHasData(state, msg) {
-    state.loading = false;
+    state.fetching = false;
+    state.hasLoadedOnce = true;
     state.error = msg;
     state.fatalError = null;
     state.staleWarning = true;

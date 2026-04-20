@@ -12,7 +12,7 @@ export default defineComponent({
   },
   setup() {
     const { state, dispatch } = useStore();
-    const loading = computed(() => state.uninstall.loading);
+    const fetching = computed(() => !!state.uninstall.fetching);
     let timerId = null;
 
     const refresh = async (isPoll) => {
@@ -21,7 +21,7 @@ export default defineComponent({
 
     const onVisibilityChange = async () => {
       if (document.hidden) return;
-      if (state.uninstall.loading) return;
+      if (state.uninstall.fetching) return;
       await refresh(true);
     };
 
@@ -29,7 +29,7 @@ export default defineComponent({
       await refresh(false);
       timerId = window.setInterval(async () => {
         if (document.hidden) return;
-        if (state.uninstall.loading) return;
+        if (state.uninstall.fetching) return;
         await refresh(true);
       }, AUTO_REFRESH_INTERVAL_MS);
       document.addEventListener("visibilitychange", onVisibilityChange);
@@ -44,7 +44,7 @@ export default defineComponent({
     });
 
     return {
-      loading,
+      fetching,
     };
   },
 });
