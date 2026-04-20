@@ -1,5 +1,5 @@
 export default {
-  getDataBegin(state, { isPoll } = {}) {
+  getDataBegin(state) {
     state.fetching = true;
   },
 
