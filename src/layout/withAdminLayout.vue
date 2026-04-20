@@ -293,7 +293,7 @@ export default defineComponent({
 
     // 版本號和建置日期 - 從 localStorage 或環境變數取得
     const appVersion = ref(process.env.VUE_APP_VERSION || "2.3.007-alpha.1");
-    const buildDate = ref(process.env.VUE_APP_BUILD_DATE || "2026.04.17 16:00:00");
+    const buildDate = ref(process.env.VUE_APP_BUILD_DATE || "2026.04.20 11:10:00");
     const importantAlarm = shallowRef([]);
     const getAlarmPromptScope = () =>
       resolveAlarmPromptScope({

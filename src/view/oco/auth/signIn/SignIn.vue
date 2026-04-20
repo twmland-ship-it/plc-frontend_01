@@ -3,7 +3,7 @@
     <a-col :xxl="6" :xl="12" :md="12" :sm="18">
       <AuthWrapper>
         <div class="ninjadash-authentication-top">
-          <h2 class="ninjadash-authentication-top__title">登入系統</h2>
+          <h2 class="ninjadash-authentication-top__title" @dblclick="showBuildInfo">登入系統</h2>
         </div>
         <div class="ninjadash-authentication-content">
           <a-form @finish="handleSubmit" :model="formState" layout="vertical">

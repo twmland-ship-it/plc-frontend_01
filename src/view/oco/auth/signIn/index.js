@@ -8,6 +8,8 @@ import ModalHelper from "@/utility/modalHelper";
 
 const domain = process.env.VUE_APP_AUTH0_DOMAIN;
 const clientId = process.env.VUE_APP_AUTH0_CLIENT_ID;
+const appVersion = process.env.VUE_APP_VERSION || "2.3.007-alpha.1";
+const buildDate = process.env.VUE_APP_BUILD_DATE || "2026.04.20 11:10:00";
 
 const SignIn = defineComponent({
   name: "SignIn",
@@ -33,6 +35,13 @@ const SignIn = defineComponent({
     };
     const onChange = (checked) => {
       checked.value = checked;
+    };
+
+    const showBuildInfo = () => {
+      ModalHelper.info({
+        title: "版本資訊",
+        content: `版本 v${appVersion} | 更新時間 ${buildDate}`,
+      });
     };
 
     const formState = reactive({
@@ -67,6 +76,7 @@ const SignIn = defineComponent({
       checked,
       handleSubmit,
       onChange,
+      showBuildInfo,
       formState,
       lock,
     };
